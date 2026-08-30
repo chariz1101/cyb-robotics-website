@@ -9,7 +9,7 @@ A week-by-week task breakdown for building and launching the Cyb Robotics Organi
 **Goal:** Project scaffolding, environments ready, database schema designed.
 
 ### Setup
-- [ ] Create GitHub repository and invite collaborators
+- [/] Create GitHub repository and invite collaborators
 - [ ] Set up Next.js project with Tailwind CSS
 - [ ] Create Supabase project (database, auth, storage)
 - [ ] Create Vercel project and link it to the GitHub repo
