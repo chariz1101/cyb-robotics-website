@@ -10,7 +10,7 @@ A week-by-week task breakdown for building and launching the Cyb Robotics Organi
 
 ### Setup
 - [/] Create GitHub repository and invite collaborators
-- [ ] Set up Next.js project with Tailwind CSS
+- [/] Set up Next.js project with Tailwind CSS
 - [ ] Create Supabase project (database, auth, storage)
 - [ ] Create Vercel project and link it to the GitHub repo
 - [ ] Set up `.env.local` and `.env.local.example` with Supabase keys
