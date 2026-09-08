@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Section, Card } from "@/components/ui";
+import { PageHeader, Card } from "@/components/ui";
 import { getProject } from "@/lib/queries";
 
 export async function generateMetadata(props: PageProps<"/projects/[id]">) {
@@ -22,59 +22,68 @@ export default async function ProjectPage(props: PageProps<"/projects/[id]">) {
   const { project, steps, files } = result;
 
   return (
-    <>
-      <Section eyebrow={project.category ?? "Project"} title={project.title}>
-        <Link
-          href="/projects"
-          className="text-sm font-semibold text-brand hover:underline"
-        >
-          ← All projects
-        </Link>
-        {project.description && (
-          <p className="mt-6 max-w-3xl text-base leading-relaxed text-ink-soft">
-            {project.description}
-          </p>
-        )}
-      </Section>
+    <main className="container-page w-full py-16 pb-[90px]">
+      <Link
+        href="/projects"
+        className="font-label text-[10.5px] uppercase tracking-[0.1em] text-brand"
+      >
+        ← All projects
+      </Link>
+      <div className="mt-5">
+        <PageHeader
+          eyebrow={project.category ?? "Project"}
+          title={project.title}
+        />
+      </div>
+      {project.description && (
+        <p className="mt-6 max-w-[70ch] text-base leading-[1.68] text-ink-body">
+          {project.description}
+        </p>
+      )}
 
       {steps.length > 0 && (
-        <Section eyebrow="Instructions" tone="alt">
-          <ol className="space-y-6">
+        <>
+          <h2 className="mt-13 border-b border-ink/14 pb-3.5 font-label text-xs uppercase tracking-[0.14em] text-brand">
+            Instructions
+          </h2>
+          <ol className="mt-6 space-y-4">
             {steps.map((step) => (
               <li key={step.id}>
-                <Card>
-                  <p className="eyebrow">Step {step.step_number}</p>
-                  <h3 className="mt-2 font-display text-lg font-semibold text-ink-strong">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-ink-soft">
+                <Card className="p-6">
+                  <p className="label-sm text-brand">Step {step.step_number}</p>
+                  <h3 className="mt-2 text-[18px] font-semibold">{step.title}</h3>
+                  <p className="mt-2 whitespace-pre-line text-sm leading-[1.6] text-ink-soft">
                     {step.instructions}
                   </p>
                 </Card>
               </li>
             ))}
           </ol>
-        </Section>
+        </>
       )}
 
       {files.length > 0 && (
-        <Section eyebrow="Downloads">
-          <ul className="space-y-3">
+        <>
+          <h2 className="mt-13 border-b border-ink/14 pb-3.5 font-label text-xs uppercase tracking-[0.14em] text-brand">
+            Downloads
+          </h2>
+          <ul className="mt-6 space-y-3">
             {files.map((file) => (
               <li key={file.id}>
                 <a
                   href={file.file_url}
-                  className="flex items-center justify-between border border-line bg-surface px-5 py-4 text-sm transition-colors hover:border-brand"
-                  style={{ borderRadius: "var(--radius-sharp)" }}
+                  className="flex items-center justify-between border border-ink/12 bg-surface px-5 py-4 text-sm transition-colors hover:border-brand"
                 >
-                  <span className="font-medium text-ink">{file.file_name}</span>
-                  <span className="text-brand">Download ↓</span>
+                  <span className="font-medium">{file.file_name}</span>
+                  <span className="font-label text-[10.5px] uppercase tracking-[0.1em] text-brand">
+                    Download ↓
+                  </span>
                 </a>
               </li>
             ))}
           </ul>
-        </Section>
+        </>
       )}
-    </>
+    </main>
   );
 }
