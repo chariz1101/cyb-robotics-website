@@ -193,29 +193,64 @@ The single most common way a project like this misses its date is treating conte
 
 ## Branding
 
-The design canvas is the source of truth:
-<https://claude.ai/design/p/325839c0-845a-470d-af8a-d4caf241b9be?file=Cyb+Robotics+Website.dc.html>
+Source of truth: the design canvas
+(artifact `1d5a075e-4df4-4952-b0da-bab50b85c2c8`).
+Extracted into `src/app/globals.css` as Tailwind v4 `@theme` tokens — use the
+token names, not raw hex, so a palette change stays a one-file edit.
 
-Fill these in from the canvas before starting Week 2 — every component decision downstream depends on them.
+### Color
 
-| Token | Value | Usage |
+| Token | Hex | Usage |
 |---|---|---|
-| Primary | `#______` | Buttons, links, active nav |
-| Primary (hover) | `#______` | Interactive states |
-| Accent | `#______` | Highlights, badges, stat counters |
-| Background | `#______` | Page background |
-| Surface | `#______` | Cards, panels |
-| Text (primary) | `#______` | Body copy |
-| Text (muted) | `#______` | Captions, metadata |
-| Border | `#______` | Dividers, card outlines |
+| `brand` | `#145C41` | Primary green — links, buttons, active nav, rules |
+| `brand-deep` | `#0C3B2A` | Deep green section backgrounds (hero, footer) |
+| `brand-mid` | `#5F9C82` | Muted green on dark backgrounds |
+| `brand-soft` | `#8FC4AA` | Light mint — secondary text on dark |
+| `canvas` | `#F6F6F1` | Page background (warm cream, never pure white) |
+| `surface` | `#FFFFFF` | Cards, panels |
+| `surface-alt` | `#F1F2EE` | Alternating sections, inset panels |
+| `surface-sunk` | `#FAFAF7` | Table stripes, subtle insets |
+| `ink` | `#31362F` | Body copy |
+| `ink-strong` | `#0B0D0C` | Headings; near-black section backgrounds |
+| `ink-soft` | `#4A504B` | Secondary copy |
+| `muted` | `#6B726C` | Captions, metadata |
+| `faint` | `#8A918B` | Timestamps, disabled states |
+| `line` | `#E7E9E4` | Borders, dividers |
+| `danger` | `#A32020` | Destructive actions, errors |
+| `accent` | `#D97757` | Sparingly — highlights, badges |
 
-| Type | Family | Usage |
+The palette is warm-neutral, not grey. `#F6F6F1` rather than white is what
+gives the design its character; using `#FFF` for page backgrounds will quietly
+flatten it.
+
+### Type
+
+| Role | Family | Notes |
 |---|---|---|
-| Headings | `______` | h1–h3 |
-| Body | `______` | Paragraphs, UI |
-| Mono | `______` | Code blocks in project guides |
+| Display | **Montserrat** | h1–h4, buttons, eyebrows. Weights 600/700 |
+| Body | **Archivo** | Paragraphs and UI. Weights 400/500 |
+| Mono | system mono | Code blocks in the members-portal guides |
 
-**Also record:** border radius scale, shadow style, spacing rhythm, logo files and their clear-space rule.
+Scale in use: 60 / 46 / 44 / 32 / 30 / 20 / 19 / 17 / 16 / 15 / 14.5 / 14 / 13.5 / 13 px.
+
+### Motifs — the details that make it look designed
+
+- **Sharp corners.** `border-radius: 2px` almost everywhere. Pills (`999px`) and
+  avatars (`50%`) are the only exceptions. Rounded cards will read as a
+  different site.
+- **Wide-tracked eyebrows.** Small uppercase labels at `0.08em`–`0.18em`
+  letter-spacing sit above nearly every section heading. This is the single most
+  recognizable move in the design — available as the `eyebrow` utility.
+- **Near-flat elevation.** Depth comes from hairline borders, not shadow. One
+  card shadow and one toast shadow exist; that's the whole scale.
+- **Light page, dark punctuation.** Cream background broken by deep-green
+  (`#0C3B2A`) and near-black (`#0B0D0C`) full-bleed sections.
+
+### Screens in the canvas
+
+Home (hero, featured projects), About (history, mission, vision, affiliation),
+Officers & Members (executives AY 2026–2027 + general members), Alumni,
+Projects, Events, members-portal guide pages, and the admin dashboard.
 
 ---
 
