@@ -76,14 +76,14 @@ The single most common way a project like this misses its date is treating conte
 **Goal:** the entire public tier is browsable against real queries.
 
 ### Track A — Build
-- [ ] Home — hero, stat counters, featured projects, upcoming event, latest announcement
-- [ ] About — history, mission/vision, affiliation
-- [ ] Officers — grouped by committee, ordered by `officer_positions.display_order`
-- [ ] Members — full directory
-- [ ] Alumni — list/gallery with batch year and current role
-- [ ] Projects — public showcase grid, plus a project detail page
-- [ ] Events — upcoming and past, with a per-event detail page and photo gallery
-- [ ] Handle every empty state (no upcoming events, no announcements, no alumni yet)
+- [x] Home — hero, stat counters, featured projects, upcoming event, latest announcement
+- [x] About — history, mission/vision, affiliation
+- [x] Officers — grouped by committee, ordered by `officer_positions.display_order`
+- [x] Members — full directory
+- [x] Alumni — list/gallery with batch year and current role
+- [x] Projects — public showcase grid, plus a project detail page
+- [x] Events — upcoming and past, with a per-event detail page and photo gallery
+- [x] Handle every empty state (no upcoming events, no announcements, no alumni yet)
 - [ ] Make all public pages responsive
 
 ### Track B — Content & Coordination

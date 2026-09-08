@@ -135,10 +135,17 @@ export type AdminUser = {
   created_at: string;
 };
 
-type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
+/**
+ * Mirrors the shape `supabase gen types` emits. `Relationships` and the
+ * `[_ in never]` empty-map form matter: supabase-js infers query return
+ * types from this, and a looser shape (e.g. `Record<string, never>`)
+ * makes `.maybeSingle()` resolve to `never`.
+ */
+type Table<Row> = {
   Row: Row;
-  Insert: Insert;
-  Update: Update;
+  Insert: Partial<Row>;
+  Update: Partial<Row>;
+  Relationships: [];
 };
 
 export type Database = {
@@ -155,11 +162,11 @@ export type Database = {
       files: Table<DirectoryFile>;
       admin_users: Table<AdminUser>;
     };
-    Views: Record<string, never>;
+    Views: { [_ in never]: never };
     Functions: {
       is_admin: { Args: Record<string, never>; Returns: boolean };
     };
-    Enums: Record<string, never>;
-    CompositeTypes: Record<string, never>;
+    Enums: { [_ in never]: never };
+    CompositeTypes: { [_ in never]: never };
   };
 };

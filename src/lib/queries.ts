@@ -151,3 +151,68 @@ export async function getAnnouncements(
   if (error) throw error;
   return data ?? [];
 }
+
+/** A single published event, or null if it does not exist / is unpublished. */
+export async function getEvent(id: string) {
+  const supabase = await createClient();
+
+  const [{ data: event, error }, { data: photos }] = await Promise.all([
+    supabase.from("events").select("*").eq("id", id).maybeSingle(),
+    supabase
+      .from("event_photos")
+      .select("*")
+      .eq("event_id", id)
+      .order("display_order"),
+  ]);
+
+  if (error) throw error;
+  if (!event) return null;
+  return { event, photos: photos ?? [] };
+}
+
+/** A single project with its steps and downloadable files. */
+export async function getProject(id: string) {
+  const supabase = await createClient();
+
+  const [{ data: project, error }, { data: steps }, { data: files }] =
+    await Promise.all([
+      supabase.from("projects").select("*").eq("id", id).maybeSingle(),
+      supabase
+        .from("project_steps")
+        .select("*")
+        .eq("project_id", id)
+        .order("step_number"),
+      supabase.from("project_files").select("*").eq("project_id", id),
+    ]);
+
+  if (error) throw error;
+  if (!project) return null;
+  return { project, steps: steps ?? [], files: files ?? [] };
+}
+
+/** Counts for the home page stat tiles. */
+export async function getStats() {
+  const supabase = await createClient();
+  const today = new Date().toISOString().slice(0, 10);
+
+  const [members, projects, events] = await Promise.all([
+    supabase
+      .from("members")
+      .select("*", { count: "exact", head: true })
+      .eq("is_alumnus", false),
+    supabase
+      .from("projects")
+      .select("*", { count: "exact", head: true })
+      .eq("is_public_showcase", true),
+    supabase
+      .from("events")
+      .select("*", { count: "exact", head: true })
+      .lt("event_date", today),
+  ]);
+
+  return {
+    members: members.count ?? 0,
+    projects: projects.count ?? 0,
+    events: events.count ?? 0,
+  };
+}

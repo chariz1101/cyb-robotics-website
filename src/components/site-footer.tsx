@@ -3,6 +3,7 @@ import Link from "next/link";
 const SOCIALS = [
   { href: "https://www.facebook.com/", label: "Facebook" },
   { href: "https://www.instagram.com/", label: "Instagram" },
+  { href: "https://github.com/", label: "GitHub" },
 ];
 
 export function SiteFooter() {
@@ -12,8 +13,7 @@ export function SiteFooter() {
         <div>
           <p className="font-display text-base font-bold">CYB Robotics Organization</p>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-brand-soft">
-            College of Information and Communications Technology, West Visayas
-            State University.
+            CICT · WVSU · La Paz, Iloilo City
           </p>
         </div>
 
@@ -40,6 +40,7 @@ export function SiteFooter() {
                 cybrobotics@wvsu.edu.ph
               </a>
             </li>
+            <li className="text-brand-mid">CICT Building, Room 204</li>
           </ul>
         </div>
 
