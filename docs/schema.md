@@ -15,7 +15,7 @@ erDiagram
     ADMIN_USERS ||--o{ EVENTS : "creates/edits"
     ADMIN_USERS ||--o{ ANNOUNCEMENTS : "creates/edits"
     ADMIN_USERS ||--o{ FILES : "uploads"
-    MEMBERS }o--|| OFFICER_POSITIONS : "may hold"
+    OFFICER_POSITIONS ||--o{ MEMBERS : "held by"
     EVENTS ||--o{ FILES : "has documentation"
     EVENTS ||--o{ EVENT_PHOTOS : "has"
     PROJECTS ||--o{ PROJECT_STEPS : "has"
@@ -28,11 +28,13 @@ erDiagram
         text year_level
         text course
         boolean is_officer
+        uuid position_id FK
         text position
         text bio
         boolean is_alumnus
         text alumnus_batch_year
         text alumnus_current_role
+        boolean is_published
         timestamptz created_at
         timestamptz updated_at
     }
@@ -143,11 +145,13 @@ Stores all current members, officers, and alumni in one table (distinguished by 
 | `year_level` | `text` | nullable | e.g., "3rd Year" (blank if alumnus) |
 | `course` | `text` | nullable | e.g., "BS Computer Science" |
 | `is_officer` | `boolean` | default `false` | Whether currently an officer |
-| `position` | `text` | nullable | e.g., "Vice President", required if `is_officer = true` |
+| `position_id` | `uuid` | FK → `officer_positions.id`, nullable | Preferred link to the officer title (drives display order) |
+| `position` | `text` | nullable | Free-text fallback label, used when no `position_id` is set |
 | `bio` | `text` | nullable | Short bio/description |
 | `is_alumnus` | `boolean` | default `false` | Whether this record is an alumnus |
 | `alumnus_batch_year` | `text` | nullable | Graduation year, if alumnus |
 | `alumnus_current_role` | `text` | nullable | Current job/role, if alumnus |
+| `is_published` | `boolean` | default `true` | Controls public visibility of the record |
 | `created_at` | `timestamptz` | default `now()` | Record creation timestamp |
 | `updated_at` | `timestamptz` | default `now()` | Last updated timestamp |
 
@@ -276,7 +280,7 @@ Mirrors relevant Supabase Auth users with role info. Supabase Auth (`auth.users`
 
 | Table | Public (anon) Read | Public (anon) Write | Authenticated Admin Read | Authenticated Admin Write |
 |---|---|---|---|---|
-| `members` | ✅ (published fields only) | ❌ | ✅ | ✅ |
+| `members` | ✅ (where `is_published = true`) | ❌ | ✅ | ✅ |
 | `officer_positions` | ✅ | ❌ | ✅ | ✅ |
 | `events` | ✅ (where `is_published = true`) | ❌ | ✅ | ✅ |
 | `event_photos` | ✅ | ❌ | ✅ | ✅ |
@@ -301,3 +305,28 @@ Mirrors relevant Supabase Auth users with role info. Supabase Auth (`auth.users`
 | `directory-files` | Sample letters, programmes, branding, event docs | Public read (via members page) |
 
 All buckets should disallow public **uploads**; only the server (via authenticated admin actions using the service role key) should write to storage.
+---
+
+## 6. Applying This Schema
+
+The runnable SQL lives in `supabase/migrations/`:
+
+| File | Contents |
+|---|---|
+| `0001_initial_schema.sql` | Tables, constraints, indexes, `updated_at` triggers, `is_admin()` helper, all RLS policies |
+| `0002_storage_buckets.sql` | Creates the five storage buckets and their read/write policies |
+| `0003_seed_officer_positions.sql` | Optional seed data for officer titles |
+
+Run them in order in the Supabase SQL Editor, or apply with `supabase db push`.
+
+**Implementation notes**
+
+- `is_admin()` is `SECURITY DEFINER` so that RLS policies can check admin status by
+  querying `admin_users` without recursing into that table's own policies.
+- All child tables (`event_photos`, `project_steps`, `project_files`) cascade on
+  delete; `created_by` / `uploaded_by` / `position_id` null out instead, so removing
+  an admin or a position never destroys content.
+- `admin_users` rows are not created by the app. After inviting an admin through
+  Supabase Auth, insert their row manually (see the note in the migration comments).
+- RLS cannot restrict *columns*, only rows — so "published fields only" is enforced
+  by selecting explicit columns in the app's queries, not by the database.
