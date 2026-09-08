@@ -29,12 +29,12 @@ The single most common way a project like this misses its date is treating conte
 - [x] Write the SRS, wireframe guide, and database schema docs
 - [x] Design the database schema (10 tables, RLS policies, storage buckets)
 - [x] Write runnable migrations (`supabase/setup.sql`, `supabase/migrations/`)
-- [ ] Create the Supabase project and run `supabase/setup.sql`
-- [ ] Insert the first `admin_users` row (see `docs/schema.md` §6 — nothing works without it)
-- [ ] Fill in `.env.local` from `env.local.example`
-- [ ] Create the Vercel project, link the repo, add env vars
-- [ ] Confirm auto-deploy works (push a commit, verify it appears live)
-- [ ] Seed placeholder data — 6 members, 3 events, 3 projects, 2 announcements
+- [x] Create the Supabase project and run `supabase/setup.sql`
+- [x] Insert the first `admin_users` row (see `docs/schema.md` §6 — nothing works without it)
+- [x] Fill in `.env.local` from `env.local.example`
+- [x] Create the Vercel project, link the repo, add env vars
+- [x] Confirm auto-deploy works (push a commit, verify it appears live)
+- [x] Seed the real AY 2026-2027 roster (20 people) via migration 0004
 
 ### Track B — Content & Coordination *(start now, do not defer)*
 - [ ] Send the photo + bio request to all 14 officers, with a **hard deadline of Week 3**
@@ -52,13 +52,13 @@ The single most common way a project like this misses its date is treating conte
 **Goal:** every future page is a fill-in-the-blanks exercise, not a design decision.
 
 ### Track A — Build
-- [ ] Translate the branding into Tailwind theme tokens (`globals.css` `@theme`)
-- [ ] Build `src/lib/supabase/` — browser client, server client, typed queries
-- [ ] Generate TypeScript types from the live schema (`supabase gen types`)
-- [ ] Build the shared shell: sticky header, nav, mobile hamburger, footer
+- [x] Translate the branding into Tailwind theme tokens (`globals.css` `@theme`)
+- [x] Build `src/lib/supabase/` — browser client, server client, typed queries
+- [~] Types hand-written in `src/lib/database.types.ts`; regenerate with `supabase gen types`
+- [x] Build the shared shell: sticky header, nav, mobile hamburger, footer
 - [ ] Build the reusable primitives the wireframes call for: `Card`, `SectionHeading`,
       `PersonCard`, `EventCard`, `ProjectCard`, `Button`, `EmptyState`
-- [ ] Set up the base metadata / SEO defaults and favicon
+- [x] Set up the base metadata / SEO defaults and favicon
 - [ ] Verify the shell on a real phone, not just a narrow browser window
 
 ### Track B — Content & Coordination
@@ -76,14 +76,14 @@ The single most common way a project like this misses its date is treating conte
 **Goal:** the entire public tier is browsable against real queries.
 
 ### Track A — Build
-- [ ] Home — hero, stat counters, featured projects, upcoming event, latest announcement
-- [ ] About — history, mission/vision, affiliation
-- [ ] Officers — grouped by committee, ordered by `officer_positions.display_order`
-- [ ] Members — full directory
-- [ ] Alumni — list/gallery with batch year and current role
-- [ ] Projects — public showcase grid, plus a project detail page
-- [ ] Events — upcoming and past, with a per-event detail page and photo gallery
-- [ ] Handle every empty state (no upcoming events, no announcements, no alumni yet)
+- [x] Home — hero, stat counters, featured projects, upcoming event, latest announcement
+- [x] About — history, mission/vision, affiliation
+- [x] Officers — grouped by committee, ordered by `officer_positions.display_order`
+- [x] Members — full directory
+- [x] Alumni — list/gallery with batch year and current role
+- [x] Projects — public showcase grid, plus a project detail page
+- [x] Events — upcoming and past, with a per-event detail page and photo gallery
+- [x] Handle every empty state (no upcoming events, no announcements, no alumni yet)
 - [ ] Make all public pages responsive
 
 ### Track B — Content & Coordination
@@ -102,7 +102,8 @@ The single most common way a project like this misses its date is treating conte
 
 ### Track A — Build
 - [ ] Admin login page via Supabase Auth
-- [ ] Route protection — middleware guarding every `/admin` route
+- [ ] Route protection — `proxy.ts` guarding every `/admin` route
+      (Next 16 renamed `middleware.ts` to `proxy.ts`; same functionality)
 - [ ] Dashboard layout and navigation
 - [ ] Member/officer management — add, edit, remove, assign position, toggle published
 - [ ] Event management — add, edit, remove, publish/unpublish, manage photo gallery
