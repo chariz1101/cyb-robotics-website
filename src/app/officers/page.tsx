@@ -1,10 +1,16 @@
-import { Section, PersonCard, EmptyState } from "@/components/ui";
+import {
+  PageHeader,
+  SectionRule,
+  OfficerCard,
+  MemberChip,
+  EmptyState,
+} from "@/components/ui";
 import { CURRENT_TERM, getOfficers, getGeneralMembers } from "@/lib/queries";
 
 export const metadata = {
   title: "Officers & Members",
   description:
-    "The executive officers, board members and general membership of CYB Robotics Organization.",
+    "The executive officers, board members and general membership of Cyb Robotics Organization.",
 };
 
 export default async function OfficersPage() {
@@ -13,87 +19,80 @@ export default async function OfficersPage() {
     getGeneralMembers(),
   ]);
 
-  const adviser = officers.adviser[0];
-
   return (
-    <>
-      <Section eyebrow="Our team" title="Officers &amp; members">
-        <p className="max-w-2xl text-base leading-relaxed text-ink-soft">
-          The people steering CYB Robotics for academic year {CURRENT_TERM}.
-        </p>
-      </Section>
+    <main className="container-page w-full py-16 pb-[90px]">
+      <PageHeader eyebrow="Directory" title="Our officers & members" />
 
-      {adviser && (
-        <Section eyebrow="Adviser" tone="alt">
-          <div className="max-w-sm">
-            <PersonCard
-              name={adviser.full_name}
-              role={adviser.officer_positions?.title}
-              detail={adviser.course}
-              photoUrl={adviser.photo_url}
+      <SectionRule className="mt-13 mb-5">
+        Executive officers — AY {CURRENT_TERM.replace("-", "–")}
+      </SectionRule>
+      {officers.executive.length === 0 ? (
+        <EmptyState>No officers have been published yet.</EmptyState>
+      ) : (
+        <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+          {officers.executive.map((m) => (
+            <OfficerCard
+              key={m.id}
+              name={m.full_name}
+              position={m.officer_positions?.title ?? m.position}
+              detail={m.course}
+              photoUrl={m.photo_url}
             />
-          </div>
-        </Section>
+          ))}
+        </div>
       )}
 
-      <Section
-        eyebrow={`AY ${CURRENT_TERM}`}
-        title="Executive officers"
-        tone={adviser ? "light" : "alt"}
-      >
-        {officers.executive.length === 0 ? (
-          <EmptyState>No officers have been published yet.</EmptyState>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {officers.executive.map((m) => (
-              <PersonCard
-                key={m.id}
-                name={m.full_name}
-                role={m.officer_positions?.title ?? m.position}
-                detail={m.year_level}
-                photoUrl={m.photo_url}
-              />
-            ))}
-          </div>
-        )}
-      </Section>
-
-      <Section title="Board members" tone="alt">
-        {officers.board.length === 0 ? (
-          <EmptyState>No board members have been published yet.</EmptyState>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {officers.board.length > 0 && (
+        <>
+          <SectionRule className="mt-14 mb-5">Board members</SectionRule>
+          <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
             {officers.board.map((m) => (
-              <PersonCard
+              <OfficerCard
                 key={m.id}
                 name={m.full_name}
-                role={m.officer_positions?.committee}
-                detail={m.year_level}
+                position={m.officer_positions?.title ?? m.position}
+                detail={m.course}
                 photoUrl={m.photo_url}
               />
             ))}
           </div>
-        )}
-      </Section>
+        </>
+      )}
 
-      <Section title="General members">
-        {members.length === 0 ? (
-          <EmptyState>
-            The general membership roster is being compiled.
-          </EmptyState>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {members.map((m) => (
-              <PersonCard
+      <SectionRule className="mt-14 mb-5">General members</SectionRule>
+      {members.length === 0 ? (
+        <EmptyState>The general membership roster is being compiled.</EmptyState>
+      ) : (
+        <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
+          {members.map((m) => (
+            <MemberChip
+              key={m.id}
+              name={m.full_name}
+              meta={m.year_level ?? m.course}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* The adviser closes the page, after the students. */}
+      {officers.adviser.length > 0 && (
+        <>
+          <SectionRule className="mt-14 mb-5">Adviser</SectionRule>
+          {/* auto-fill, not auto-fit: keeps the lone adviser card at card
+              width instead of stretching it across the row. */}
+          <div className="grid gap-5 [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]">
+            {officers.adviser.map((m) => (
+              <OfficerCard
                 key={m.id}
                 name={m.full_name}
-                detail={m.year_level}
+                position={m.officer_positions?.title ?? m.position}
+                detail={m.course}
                 photoUrl={m.photo_url}
               />
             ))}
           </div>
-        )}
-      </Section>
-    </>
+        </>
+      )}
+    </main>
   );
 }

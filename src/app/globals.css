@@ -2,90 +2,140 @@
 
 /* ============================================================
    Cyb Robotics — Design Tokens
-   Source of truth: the Claude Design canvas (see docs/tasklist.md).
-   The site commits to a single light look with deep-green dark
-   sections, matching the canvas. There is no dark-mode variant.
+   Source of truth: "Cyb Robotics Website.dc.html" (design canvas).
+   Values below are taken from that file, not approximated.
    ============================================================ */
 
 @theme {
   /* --- Brand green --- */
-  --color-brand: #145c41; /* primary: links, buttons, active nav, rules */
-  --color-brand-deep: #0c3b2a; /* dark green section backgrounds */
-  --color-brand-mid: #5f9c82; /* muted green, on dark backgrounds */
-  --color-brand-soft: #8fc4aa; /* light mint, secondary text on dark */
+  --color-brand: #145c41; /* primary: links, labels, active states */
+  --color-brand-deep: #0c3b2a; /* hero, mission card, officer photo panel */
+  --color-brand-mid: #5f9c82; /* muted green on dark */
+  --color-brand-soft: #8fc4aa; /* mint: labels + initials on dark */
+  --color-brand-pale: #a8d3bd; /* label on the solid-green event card */
+  --color-brand-tint: #cfe6da; /* meta text on solid green */
+  --color-brand-wash: #e4ede7; /* member initial chips */
 
-  /* --- Neutrals (warm, not grey) --- */
+  /* --- Neutrals (warm) --- */
   --color-canvas: #f6f6f1; /* page background */
-  --color-surface: #ffffff; /* cards, panels */
-  --color-surface-alt: #f1f2ee; /* alternating sections, inset panels */
-  --color-surface-sunk: #fafaf7; /* subtle inset, table stripes */
-  --color-ink: #31362f; /* body copy */
-  --color-ink-strong: #0b0d0c; /* near-black section backgrounds */
-  --color-ink-soft: #4a504b; /* secondary copy */
-  --color-muted: #6b726c; /* captions, metadata */
-  --color-faint: #8a918b; /* timestamps, disabled */
-  --color-line: #e7e9e4; /* borders, dividers */
-  --color-line-soft: #ebece7; /* hairlines inside cards */
+  --color-surface: #ffffff; /* cards */
+  --color-surface-alt: #f1f2ee;
+  --color-hatch: #e7e9e4; /* image-placeholder hatching */
+  --color-ink: #0b0d0c; /* body text and the dark header/footer */
+  --color-ink-body: #31362f; /* long-form paragraphs */
+  --color-ink-soft: #4a504b; /* card copy */
+  --color-muted: #6b726c; /* meta, captions */
+  --color-faint: #8a918b;
 
   /* --- Status --- */
-  --color-danger: #a32020; /* destructive actions, errors */
-  --color-accent: #d97757; /* sparingly: highlights, badges */
+  --color-danger: #a32020;
+  --color-accent: #d97757;
 
-  /* --- Type --- */
-  --font-display: var(--font-montserrat), "Helvetica Neue", sans-serif;
-  --font-sans: var(--font-archivo), Helvetica, Arial, sans-serif;
+  /* --- Type ---
+     Archivo carries headings AND body. Montserrat is used ONLY for the
+     small uppercase label text (eyebrows, nav meta, stat labels). */
+  --font-sans: var(--font-archivo), Helvetica, sans-serif;
+  --font-label: var(--font-montserrat), var(--font-archivo), sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* --- Radius: deliberately sharp. The canvas uses 2px almost
-         everywhere; pills and avatars are the only exceptions. --- */
-  --radius-sharp: 2px;
-  --radius-pill: 999px;
-
-  /* --- Elevation: near-flat. Depth comes from borders, not shadow. --- */
-  --shadow-card: 0 0 0 0.5px rgb(31 30 29 / 0.14), 0 2px 10px rgb(0 0 0 / 0.09);
-  --shadow-toast: 0 8px 30px rgb(11 13 12 / 0.28);
+  /* --- Layout --- */
+  --spacing-gutter: 28px;
+  --container-page: 1240px;
 }
 
 /* ============================================================
    Base
    ============================================================ */
 
-body {
-  background: var(--color-canvas);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-}
+/* These must live in @layer base. An unlayered element rule outranks
+   every Tailwind utility, so a bare `a { color }` would defeat the
+   text-* classes on the dark header and footer links. */
+@layer base {
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
-  color: var(--color-ink-strong);
+  a {
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--color-brand-deep);
+  }
+
+  /* Archivo, tightened. The canvas uses negative tracking at every
+     heading size; without it the display type reads noticeably wider. */
+  h1 {
+    letter-spacing: -0.028em;
+    line-height: 1.05;
+  }
+  h2 {
+    letter-spacing: -0.02em;
+  }
+  h3 {
+    letter-spacing: -0.012em;
+  }
 }
 
 /* ============================================================
-   Eyebrow / section label
-
-   The canvas's most distinctive typographic move: small uppercase
-   labels on very wide tracking (0.08em-0.18em), used above nearly
-   every section heading. Defined once here so it stays consistent.
+   Utilities
    ============================================================ */
 
-@utility eyebrow {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 600;
+/** Page container: 1240px with 28px gutters. */
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+/** Small uppercase label — Montserrat 400, wide tracking. */
+@utility label {
+  font-family: var(--font-label);
+  font-weight: 400;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+@utility label-sm {
+  font-family: var(--font-label);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/** Section heading rule — 12px Montserrat over a hairline. */
+@utility section-rule {
+  font-family: var(--font-label);
+  font-weight: 400;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-brand);
+  border-bottom: 1px solid rgb(11 13 12 / 0.14);
+  padding-bottom: 14px;
 }
 
-@utility eyebrow-on-dark {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-brand-soft);
+/** Diagonal hatching used for every image placeholder in the canvas. */
+@utility hatch {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--color-hatch) 0 8px,
+    var(--color-surface-alt) 8px 16px
+  );
+}
+
+/** The officer card's photo panel: deep green with a subtle weave. */
+@utility hatch-deep {
+  background-color: var(--color-brand-deep);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(246 246 241 / 0.05) 0 8px,
+    transparent 8px 16px
+  );
 }
