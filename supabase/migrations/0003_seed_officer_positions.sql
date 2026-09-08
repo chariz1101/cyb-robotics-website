@@ -1,7 +1,8 @@
 -- ============================================================
 -- Cyb Robotics — Seed data: officer positions for AY 2026-2027
--- Optional. Edit the titles/order to match your org's structure.
+-- Reflects the org's actual VP / Board Member committee structure.
 -- ============================================================
+
 
 insert into public.officer_positions (title, display_order, term_year) values
   ('President',            1, '2026-2027'),
