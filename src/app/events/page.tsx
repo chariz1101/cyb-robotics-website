@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Section, Card, EmptyState } from "@/components/ui";
+import { PageHeader, Card, Placeholder, EmptyState } from "@/components/ui";
 import { getEvents } from "@/lib/queries";
 import type { EventRecord } from "@/lib/database.types";
 
@@ -17,29 +17,36 @@ function formatDate(value: string) {
   });
 }
 
-function EventList({ events }: { events: EventRecord[] }) {
+function EventRow({ event }: { event: EventRecord }) {
   return (
-    <div className="grid gap-6 md:grid-cols-3">
-      {events.map((event) => (
-        <Card key={event.id}>
-          <p className="text-sm text-muted">{formatDate(event.event_date)}</p>
-          <h3 className="mt-2 font-display text-lg font-semibold text-ink-strong">
-            {event.title}
-          </h3>
+    <Link href={`/events/${event.id}`}>
+      <Card
+        interactive
+        className="grid [grid-template-columns:minmax(0,1fr)] sm:[grid-template-columns:minmax(0,220px)_minmax(0,1fr)]"
+      >
+        {event.cover_photo_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={event.cover_photo_url}
+            alt=""
+            className="h-full min-h-[150px] w-full object-cover"
+          />
+        ) : (
+          <Placeholder label="cover photo" className="min-h-[150px]" />
+        )}
+        <div className="flex flex-col gap-2.5 p-6">
+          <p className="font-label text-[11px] uppercase tracking-[0.1em] text-brand">
+            {formatDate(event.event_date)}
+          </p>
+          <h3 className="text-[21px] font-semibold">{event.title}</h3>
           {event.description && (
-            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">
+            <p className="max-w-[70ch] text-[14.5px] leading-[1.6] text-ink-soft">
               {event.description}
             </p>
           )}
-          <Link
-            href={`/events/${event.id}`}
-            className="mt-4 inline-block text-sm font-semibold text-brand hover:underline"
-          >
-            Read more →
-          </Link>
-        </Card>
-      ))}
-    </div>
+        </div>
+      </Card>
+    </Link>
   );
 }
 
@@ -50,22 +57,30 @@ export default async function EventsPage() {
   ]);
 
   return (
-    <>
-      <Section eyebrow="Calendar" title="Events">
+    <main className="container-page w-full py-16 pb-[90px]">
+      <PageHeader eyebrow="Calendar" title="Events" />
+
+      <h2 className="mt-9 border-b border-ink/14 pb-3 font-label text-xs uppercase tracking-[0.12em] text-brand">
+        Upcoming
+      </h2>
+      <div className="mt-6 flex flex-col gap-4">
         {upcoming.length === 0 ? (
           <EmptyState>No upcoming events are scheduled right now.</EmptyState>
         ) : (
-          <EventList events={upcoming} />
+          upcoming.map((event) => <EventRow key={event.id} event={event} />)
         )}
-      </Section>
+      </div>
 
-      <Section title="Past events" tone="alt">
+      <h2 className="mt-14 border-b border-ink/14 pb-3 font-label text-xs uppercase tracking-[0.12em] text-brand">
+        Past
+      </h2>
+      <div className="mt-6 flex flex-col gap-4">
         {past.length === 0 ? (
           <EmptyState>Past events will appear here once documented.</EmptyState>
         ) : (
-          <EventList events={past} />
+          past.map((event) => <EventRow key={event.id} event={event} />)
         )}
-      </Section>
-    </>
+      </div>
+    </main>
   );
 }

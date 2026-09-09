@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Section, Card, EmptyState } from "@/components/ui";
+import { PageHeader, Card, Placeholder, EmptyState } from "@/components/ui";
 import { getProjects } from "@/lib/queries";
 
 export const metadata = {
@@ -12,39 +12,54 @@ export default async function ProjectsPage() {
   const projects = await getProjects({ showcase: true });
 
   return (
-    <Section eyebrow="Showcase" title="Our projects">
+    <main className="container-page w-full py-16 pb-[90px]">
+      <PageHeader eyebrow="Showcase" title="Our projects" />
+
       {projects.length === 0 ? (
-        <EmptyState>No projects have been published yet.</EmptyState>
+        <div className="mt-10">
+          <EmptyState>No projects have been published yet.</EmptyState>
+        </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="mt-9 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
           {projects.map((project) => (
-            <Card key={project.id}>
-              <div className="flex items-center justify-between gap-3">
-                {project.category && <p className="eyebrow">{project.category}</p>}
-                {project.difficulty_level && (
-                  <span className="text-xs text-faint">
-                    {project.difficulty_level}
-                  </span>
+            <Link key={project.id} href={`/projects/${project.id}`}>
+              <Card interactive className="flex h-full flex-col">
+                {project.cover_image_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={project.cover_image_url}
+                    alt=""
+                    className="h-[180px] w-full object-cover"
+                  />
+                ) : (
+                  <Placeholder label="project cover" className="h-[180px]" />
                 )}
-              </div>
-              <h3 className="mt-3 font-display text-lg font-semibold text-ink-strong">
-                {project.title}
-              </h3>
-              {project.description && (
-                <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-muted">
-                  {project.description}
-                </p>
-              )}
-              <Link
-                href={`/projects/${project.id}`}
-                className="mt-4 inline-block text-sm font-semibold text-brand hover:underline"
-              >
-                Read more →
-              </Link>
-            </Card>
+                <div className="flex flex-1 flex-col gap-2.5 p-5">
+                  <div className="flex items-center justify-between gap-2.5">
+                    {project.category && (
+                      <span className="label-sm text-brand">{project.category}</span>
+                    )}
+                    {project.difficulty_level && (
+                      <span className="font-label text-[10px] text-muted">
+                        {project.difficulty_level}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-[18.5px] font-semibold">{project.title}</h3>
+                  {project.description && (
+                    <p className="text-sm leading-[1.55] text-ink-soft">
+                      {project.description}
+                    </p>
+                  )}
+                  <span className="mt-auto pt-3 font-label text-[10.5px] uppercase tracking-[0.1em] text-brand">
+                    Read more →
+                  </span>
+                </div>
+              </Card>
+            </Link>
           ))}
         </div>
       )}
-    </Section>
+    </main>
   );
 }
