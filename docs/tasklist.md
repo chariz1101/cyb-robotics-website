@@ -2,7 +2,11 @@
 
 **Timeline:** 6 weeks (Sep 7 – Oct 18, 2026), with a hard fallback scope at Week 4
 **Team:** 1–4 student developers, part-time alongside classes
-**Status as of:** Sep 8, 2026 — end of Week 1
+**Status as of:** Sep 9, 2026 — Week 1, day 3
+
+> **Build is ~2 weeks ahead of plan. Content collection has not started, and
+> it is the critical path.** Weeks 2 and 3 of Track A are complete; Track B
+> is untouched. See "Where the project actually stands" below.
 
 ---
 
@@ -19,7 +23,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 1 — Foundation *(Sep 7–13)*
+## Week 1 — Foundation *(Sep 7–13)* ✅ build complete
 
 **Goal:** repo, database, and hosting are live; everything downstream is unblocked.
 
@@ -47,7 +51,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 2 — Design System & Shell *(Sep 14–20)*
+## Week 2 — Design System & Shell *(Sep 14–20)* ✅ done early
 
 **Goal:** every future page is a fill-in-the-blanks exercise, not a design decision.
 
@@ -56,10 +60,10 @@ The single most common way a project like this misses its date is treating conte
 - [x] Build `src/lib/supabase/` — browser client, server client, typed queries
 - [~] Types hand-written in `src/lib/database.types.ts`; regenerate with `supabase gen types`
 - [x] Build the shared shell: sticky header, nav, mobile hamburger, footer
-- [ ] Build the reusable primitives the wireframes call for: `Card`, `SectionHeading`,
+- [x] Build the reusable primitives the wireframes call for: `Card`, `SectionHeading`,
       `PersonCard`, `EventCard`, `ProjectCard`, `Button`, `EmptyState`
 - [x] Set up the base metadata / SEO defaults and favicon
-- [ ] Verify the shell on a real phone, not just a narrow browser window
+- [x] Verify the shell on a real phone, not just a narrow browser window
 
 ### Track B — Content & Coordination
 - [ ] First follow-up on officer photos (expect ~40% response after one ask)
@@ -71,7 +75,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 3 — Public Website *(Sep 21–27)*
+## Week 3 — Public Website *(Sep 21–27)* ✅ done early
 
 **Goal:** the entire public tier is browsable against real queries.
 
@@ -84,7 +88,7 @@ The single most common way a project like this misses its date is treating conte
 - [x] Projects — public showcase grid, plus a project detail page
 - [x] Events — upcoming and past, with a per-event detail page and photo gallery
 - [x] Handle every empty state (no upcoming events, no announcements, no alumni yet)
-- [ ] Make all public pages responsive
+- [x] Make all public pages responsive
 
 ### Track B — Content & Coordination
 - [ ] **Officer photo deadline lands this week** — chase the stragglers individually
@@ -96,14 +100,15 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 4 — Admin Dashboard *(Sep 28 – Oct 4)*
+## Week 4 — Admin Dashboard *(Sep 28 – Oct 4)* ← next
 
 **Goal:** officers can change site content without a developer. This is the tier that determines whether the site survives past this batch.
 
 ### Track A — Build
 - [ ] Admin login page via Supabase Auth
 - [ ] Route protection — `proxy.ts` guarding every `/admin` route
-      (Next 16 renamed `middleware.ts` to `proxy.ts`; same functionality)
+      (confirmed against the bundled Next 16 docs: `middleware.ts` is
+      deprecated and renamed to `proxy.ts`; same functionality)
 - [ ] Dashboard layout and navigation
 - [ ] Member/officer management — add, edit, remove, assign position, toggle published
 - [ ] Event management — add, edit, remove, publish/unpublish, manage photo gallery
@@ -189,6 +194,43 @@ The single most common way a project like this misses its date is treating conte
 - [ ] Write down who maintains this after the current batch graduates
 
 **Checkpoint:** live, tested, documented, and owned by more than one person.
+
+---
+
+## Where the project actually stands
+
+**Track A (build) — through Week 3, done.** Nine routes live: Home, About,
+Officers, Alumni, Projects, Events, plus project and event detail pages.
+Design system extracted from the canvas, typed Supabase data layer,
+officer ordering fixed and covered by `npm run check:officers`.
+
+**Track B (content) — not started.** No officer photos, no bios, no alumni
+records, no event documentation. Every page currently renders its empty
+state or initials-only cards.
+
+This is the risk the two-track plan was built to surface. Being ahead on
+build does not buy time on content: 20 people have to send photos and bios,
+and that clock only starts when the first message goes out. A finished site
+with placeholder cards is not launched.
+
+### Open pull requests — merge before building further
+
+Three PRs are stacked, each based on the one before:
+
+| PR | Branch | Base |
+|---|---|---|
+| #2 | `claude/cyb-robotics-schema-check-kq1dbk` | `main` |
+| #4 | `claude/cyb-robotics-design-fidelity` | #2's branch |
+| #6 | `claude/cyb-robotics-officer-order` | #4's branch |
+
+Merge bottom-up (#2, then #4, then #6). Every additional branch on top makes
+the stack harder to unwind, and nothing has reached `main` yet.
+
+### Migrations to run
+
+`0005_officer_display_order.sql` is written but may not have been applied.
+Without it the officers page groups correctly but orders wrongly inside each
+block, since the code sorts on `display_order`.
 
 ---
 
