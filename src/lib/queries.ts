@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { groupOfficers } from "@/lib/officers";
 
 import type {
   Announcement,
@@ -11,12 +12,21 @@ import type {
 /** The academic year the public site currently presents. */
 export const CURRENT_TERM = "2026-2027";
 
+const POSITION_FIELDS =
+  "id, title, display_order, term_year, role_group, committee";
+
 const MEMBER_SELECT = `
   id, full_name, photo_url, year_level, course, is_officer, position_id,
   position, bio, is_alumnus, alumnus_batch_year, alumnus_current_role,
   is_published, created_at, updated_at,
-  officer_positions ( id, title, display_order, term_year, role_group, committee )
+  officer_positions ( ${POSITION_FIELDS} )
 `;
+
+/** Same columns, but requiring a position so the term filter drops rows. */
+const OFFICER_SELECT = MEMBER_SELECT.replace(
+  "officer_positions (",
+  "officer_positions!inner (",
+);
 
 /**
  * Officers for a term, split into the blocks the public page renders:
@@ -30,31 +40,18 @@ export async function getOfficers(term: string = CURRENT_TERM): Promise<
 > {
   const supabase = await createClient();
 
+  // `!inner` matters: without it, a term_year filter on an embedded
+  // resource nulls out the embed instead of dropping the row, so officers
+  // from other terms would come back with no position attached.
   const { data, error } = await supabase
     .from("members")
-    .select(MEMBER_SELECT)
+    .select(OFFICER_SELECT)
     .eq("is_officer", true)
     .eq("officer_positions.term_year", term)
-    .order("display_order", {
-      referencedTable: "officer_positions",
-      ascending: true,
-    })
     .overrideTypes<MemberWithPosition[]>();
 
   if (error) throw error;
-
-  const grouped: Record<RoleGroup, MemberWithPosition[]> = {
-    adviser: [],
-    executive: [],
-    board: [],
-  };
-
-  for (const member of data ?? []) {
-    const group = member.officer_positions?.role_group;
-    if (group) grouped[group].push(member);
-  }
-
-  return grouped;
+  return groupOfficers(data ?? []);
 }
 
 /** Members who are not officers and not alumni. */
