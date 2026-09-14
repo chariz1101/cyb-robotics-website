@@ -96,21 +96,24 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 4 — Admin Dashboard *(Sep 28 – Oct 4)*
+## Week 4 — Admin Dashboard *(Sep 28 – Oct 4)* — CRUD done, uploads pending
 
 **Goal:** officers can change site content without a developer. This is the tier that determines whether the site survives past this batch.
 
 ### Track A — Build
-- [ ] Admin login page via Supabase Auth
-- [ ] Route protection — `proxy.ts` guarding every `/admin` route
+- [x] Admin login page via Supabase Auth
+- [x] Route protection — `proxy.ts` guarding every `/admin` route
       (Next 16 renamed `middleware.ts` to `proxy.ts`; same functionality)
-- [ ] Dashboard layout and navigation
-- [ ] Member/officer management — add, edit, remove, assign position, toggle published
-- [ ] Event management — add, edit, remove, publish/unpublish, manage photo gallery
-- [ ] Announcement management — create, edit, delete, publish/unpublish, set audience
-- [ ] File upload interface for the members directory, with category tagging
-- [ ] Image upload with client-side resize before it reaches storage
-- [ ] Confirm every write path goes through RLS as the signed-in admin, **not** the service role key
+- [x] Dashboard layout and navigation
+- [x] Member/officer management — add, edit, remove, assign position, toggle published
+- [~] Event management — add, edit, remove, publish/unpublish done; **photo gallery
+      (`event_photos`) not yet editable**
+- [x] Announcement management — create, edit, delete, publish/unpublish, set audience
+- [~] Files table with category tagging done, but **entries take a URL — there is
+      no upload to Supabase Storage yet**
+- [ ] Image upload with client-side resize before it reaches storage — **next task**,
+      and what officers need to submit photos themselves
+- [x] Confirm every write path goes through RLS as the signed-in admin, **not** the service role key
 - [ ] End-to-end test: create → appears publicly; unpublish → disappears
 
 ### Track B — Content & Coordination
