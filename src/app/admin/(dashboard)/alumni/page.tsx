@@ -38,7 +38,14 @@ export default async function AdminAlumniPage() {
         placeholder: "Software Engineer, Acme Inc.",
       },
       { name: "course", label: "Course", type: "text" },
-      { name: "photo_url", label: "Photo URL", type: "text", placeholder: "https://…" },
+      {
+        name: "photo_url",
+        label: "Photo",
+        type: "upload",
+        bucket: "avatars",
+        accept: "image/*",
+        preview: true,
+      },
       { name: "is_published", label: "Show on public site", type: "toggle" },
     ],
   };

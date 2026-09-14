@@ -1,6 +1,14 @@
 import type { EditableTable } from "@/lib/actions";
+import type { Bucket } from "@/lib/upload";
 
-export type FieldType = "text" | "textarea" | "select" | "toggle" | "date" | "number";
+export type FieldType =
+  | "text"
+  | "textarea"
+  | "select"
+  | "toggle"
+  | "date"
+  | "number"
+  | "upload";
 
 export type Field = {
   name: string;
@@ -10,6 +18,18 @@ export type Field = {
   required?: boolean;
   /** For `select`. A null value renders as "—" and writes null. */
   options?: { value: string | null; label: string }[];
+  /** For `upload`: which storage bucket the file goes to. */
+  bucket?: Bucket;
+  /** For `upload`: the file picker's accept attribute. */
+  accept?: string;
+  /** For `upload`: show a thumbnail of the stored file. */
+  preview?: boolean;
+  /**
+   * For `upload`: field names to fill from the upload result, so the
+   * files table can record type and size without the admin typing them.
+   */
+  fillsFileType?: string;
+  fillsSizeKb?: string;
 };
 
 export type Column = {

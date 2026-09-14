@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { UploadField } from "@/components/admin/upload-field";
 import type { Field } from "@/components/admin/types";
 
 function initialValues(fields: Field[], initial?: Record<string, unknown>) {
@@ -30,6 +31,9 @@ export function FormModal({
   onSave: (values: Record<string, unknown>) => void;
 }) {
   const [values, setValues] = useState(() => initialValues(fields, initial));
+  // `required` on a file input only checks the picker, not whether an
+  // upload finished, so required uploads are validated here instead.
+  const [missing, setMissing] = useState<string[]>([]);
 
   // Escape closes, matching the click-outside affordance.
   useEffect(() => {
@@ -73,7 +77,14 @@ export function FormModal({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onSave(values);
+            const empty = fields
+              .filter(
+                (f) =>
+                  f.type === "upload" && f.required && !values[f.name],
+              )
+              .map((f) => f.name);
+            setMissing(empty);
+            if (empty.length === 0) onSave(values);
           }}
         >
           <div className="flex flex-col gap-4.5 p-6.5">
@@ -115,6 +126,28 @@ export function FormModal({
                         </option>
                       ))}
                     </select>
+                  ) : field.type === "upload" ? (
+                    <UploadField
+                      id={id}
+                      bucket={field.bucket ?? "directory-files"}
+                      accept={field.accept}
+                      preview={field.preview}
+                      value={String(value ?? "")}
+                      onUploaded={(result) => {
+                        setMissing((m) => m.filter((n) => n !== field.name));
+                        setValues((v) => ({
+                          ...v,
+                          [field.name]: result.url,
+                          // Derived columns, when the resource asked for them.
+                          ...(field.fillsFileType
+                            ? { [field.fillsFileType]: result.fileType }
+                            : {}),
+                          ...(field.fillsSizeKb
+                            ? { [field.fillsSizeKb]: result.sizeKb || "" }
+                            : {}),
+                        }));
+                      }}
+                    />
                   ) : field.type === "toggle" ? (
                     <button
                       type="button"
@@ -139,6 +172,14 @@ export function FormModal({
                       onChange={(e) => set(field.name, e.target.value)}
                       className={inputClass}
                     />
+                  )}
+                  {missing.includes(field.name) && (
+                    <p
+                      role="alert"
+                      className="mt-1.75 font-label text-[11.5px] text-danger"
+                    >
+                      {field.label} is required.
+                    </p>
                   )}
                 </div>
               );

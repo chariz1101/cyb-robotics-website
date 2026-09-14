@@ -19,7 +19,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 1 — Foundation *(Sep 7–13)*
+## Week 1 — Foundation *(Sep 7–13)* ✅ done
 
 **Goal:** repo, database, and hosting are live; everything downstream is unblocked.
 
@@ -47,7 +47,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 2 — Design System & Shell *(Sep 14–20)*
+## Week 2 — Design System & Shell *(Sep 14–20)* ✅ done
 
 **Goal:** every future page is a fill-in-the-blanks exercise, not a design decision.
 
@@ -71,7 +71,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 3 — Public Website *(Sep 21–27)*
+## Week 3 — Public Website *(Sep 21–27)* ✅ done
 
 **Goal:** the entire public tier is browsable against real queries.
 
@@ -96,7 +96,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 4 — Admin Dashboard *(Sep 28 – Oct 4)* — CRUD done, uploads pending
+## Week 4 — Admin Dashboard *(Sep 28 – Oct 4)* ✅ done
 
 **Goal:** officers can change site content without a developer. This is the tier that determines whether the site survives past this batch.
 
@@ -109,10 +109,8 @@ The single most common way a project like this misses its date is treating conte
 - [~] Event management — add, edit, remove, publish/unpublish done; **photo gallery
       (`event_photos`) not yet editable**
 - [x] Announcement management — create, edit, delete, publish/unpublish, set audience
-- [~] Files table with category tagging done, but **entries take a URL — there is
-      no upload to Supabase Storage yet**
-- [ ] Image upload with client-side resize before it reaches storage — **next task**,
-      and what officers need to submit photos themselves
+- [x] File upload interface for the members directory, with category tagging
+- [x] Image upload with client-side resize before it reaches storage
 - [x] Confirm every write path goes through RLS as the signed-in admin, **not** the service role key
 - [ ] End-to-end test: create → appears publicly; unpublish → disappears
 
@@ -127,7 +125,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 5 — Members Portal *(Oct 5–11)*
+## Week 5 — Members Portal *(Oct 5–11)* ← next
 
 **Goal:** the unlisted members tier is complete and useful.
 
@@ -192,6 +190,38 @@ The single most common way a project like this misses its date is treating conte
 - [ ] Write down who maintains this after the current batch graduates
 
 **Checkpoint:** live, tested, documented, and owned by more than one person.
+
+---
+
+## Where the project actually stands
+
+*Updated Sep 14, 2026.*
+
+**Track A (build) — Weeks 1 through 4 complete.** Nine public routes, the
+design system, the typed data layer, and the full admin dashboard: login,
+route protection, and CRUD for members, alumni, events, announcements and
+files. Photo and file uploads go to Supabase Storage, with images
+downscaled in the browser before they leave the device.
+
+**Track B (content) — not started.** No officer photos, no bios, no alumni
+records, no event documentation. Every page still renders its empty state
+or initials-only cards.
+
+The dashboard no longer blocks this. Officers can manage everything
+themselves, photos included, so content collection is now purely a matter
+of asking people and waiting. That waiting is the longest lead time left
+in the project — 20 people have to send material, and the clock starts
+when the first message goes out, not when the site is finished.
+
+### Checks
+
+Run `npm run check` before pushing. It covers the two things that broke
+silently once already:
+
+| Script | What it protects |
+|---|---|
+| `check:officers` | Officer ordering — shuffles the real roster and asserts President first, adviser last |
+| `check:images` | Upload resizing — runs the shipped function in Chromium against generated photos |
 
 ---
 
