@@ -43,7 +43,17 @@ export default async function AdminFilesPage() {
           { value: "other", label: "Other" },
         ],
       },
-      { name: "file_url", label: "File URL", type: "text", required: true, placeholder: "https://…" },
+      {
+        name: "file_url",
+        label: "File",
+        type: "upload",
+        required: true,
+        bucket: "directory-files",
+        // file_type and file_size_kb are derived from the upload rather
+        // than typed, so they cannot drift from the actual file.
+        fillsFileType: "file_type",
+        fillsSizeKb: "file_size_kb",
+      },
       {
         name: "related_event_id",
         label: "Related event",
@@ -53,8 +63,7 @@ export default async function AdminFilesPage() {
           ...(events ?? []).map((e) => ({ value: e.id, label: e.title })),
         ],
       },
-      { name: "file_type", label: "File type", type: "text", placeholder: "pdf" },
-      { name: "file_size_kb", label: "Size (KB)", type: "number" },
+
     ],
   };
 

@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check:officers": "node --experimental-strip-types scripts/check-officer-order.mjs"
+    "check:officers": "node --experimental-strip-types scripts/check-officer-order.mjs",
+    "check:images": "node scripts/check-image-resize.mjs",
+    "check": "npm run check:officers && npm run check:images"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -21,8 +23,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.28.2",
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
+    "playwright": "^1.63.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

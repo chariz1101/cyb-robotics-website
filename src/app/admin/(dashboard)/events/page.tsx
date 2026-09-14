@@ -37,7 +37,14 @@ export default async function AdminEventsPage() {
         ],
       },
       { name: "description", label: "Description", type: "textarea" },
-      { name: "cover_photo_url", label: "Cover photo URL", type: "text", placeholder: "https://…" },
+      {
+        name: "cover_photo_url",
+        label: "Cover photo",
+        type: "upload",
+        bucket: "event-media",
+        accept: "image/*",
+        preview: true,
+      },
       { name: "is_published", label: "Show on public site", type: "toggle" },
     ],
   };
