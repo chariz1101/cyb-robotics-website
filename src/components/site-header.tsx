@@ -61,7 +61,7 @@ export function SiteHeader() {
         </nav>
 
         <Link
-          href="/portal"
+          href="/members-portal"
           className="ml-auto hidden rounded-[2px] border border-canvas/24 px-3.5 py-2.5 font-label text-[11px] uppercase tracking-[0.1em] text-canvas transition-colors hover:bg-white/10 md:ml-0 md:block"
         >
           Members
@@ -99,7 +99,7 @@ export function SiteHeader() {
             </Link>
           ))}
           <Link
-            href="/portal"
+            href="/members-portal"
             onClick={() => setOpen(false)}
             className="mt-3 inline-block rounded-[2px] border border-canvas/24 px-3.5 py-2.5 font-label text-[11px] uppercase tracking-[0.1em] text-canvas"
           >

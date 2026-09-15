@@ -3,6 +3,7 @@ import { groupOfficers } from "@/lib/officers";
 
 import type {
   Announcement,
+  DirectoryFile,
   EventRecord,
   MemberWithPosition,
   Project,
@@ -212,4 +213,62 @@ export async function getStats() {
     projects: projects.count ?? 0,
     events: events.count ?? 0,
   };
+}
+
+/** Files for the members directory, newest first, with event titles joined. */
+export async function getDirectoryFiles() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("files")
+    .select(
+      "id, file_name, category, file_url, file_type, file_size_kb, related_event_id, created_at, events ( title )",
+    )
+    .order("created_at", { ascending: false })
+    .overrideTypes<
+      (DirectoryFile & { events: { title: string } | null })[]
+    >();
+
+  if (error) throw error;
+  return data ?? [];
+}
+
+/** Beginner project guides shown in the members portal. */
+export async function getGuides() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*, project_steps ( id )")
+    .eq("is_members_guide", true)
+    .order("title")
+    .overrideTypes<(Project & { project_steps: { id: string }[] })[]>();
+
+  if (error) throw error;
+  return data ?? [];
+}
+
+/** One guide with its ordered steps and downloadable files. */
+export async function getGuide(id: string) {
+  const supabase = await createClient();
+
+  const [{ data: project, error }, { data: steps }, { data: files }] =
+    await Promise.all([
+      supabase
+        .from("projects")
+        .select("*")
+        .eq("id", id)
+        .eq("is_members_guide", true)
+        .maybeSingle(),
+      supabase
+        .from("project_steps")
+        .select("*")
+        .eq("project_id", id)
+        .order("step_number"),
+      supabase.from("project_files").select("*").eq("project_id", id),
+    ]);
+
+  if (error) throw error;
+  if (!project) return null;
+  return { project, steps: steps ?? [], files: files ?? [] };
 }

@@ -80,6 +80,7 @@ export type Project = {
   category: string | null;
   difficulty_level: Difficulty | null;
   cover_image_url: string | null;
+  parts_list: string | null;
   is_public_showcase: boolean;
   is_members_guide: boolean;
   created_at: string;

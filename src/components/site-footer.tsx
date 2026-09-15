@@ -59,7 +59,7 @@ export function SiteFooter() {
             Internal
           </p>
           <div className="flex flex-col items-start gap-2.5 text-sm">
-            <Link href="/portal" className="text-canvas/66 hover:text-canvas">
+            <Link href="/members-portal" className="text-canvas/66 hover:text-canvas">
               Members portal
             </Link>
             <Link href="/admin" className="text-canvas/66 hover:text-canvas">

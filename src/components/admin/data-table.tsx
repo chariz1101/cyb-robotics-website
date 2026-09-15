@@ -2,6 +2,8 @@
 
 import { useMemo, useState, useTransition } from "react";
 
+import Link from "next/link";
+
 import { createRow, deleteRow, updateRow } from "@/lib/actions";
 import { FormModal } from "@/components/admin/form-modal";
 import type { Resource, TableRow } from "@/components/admin/types";
@@ -134,14 +136,24 @@ export function DataTable({
               className="grid items-center gap-2 border-b border-ink/6 px-5 py-3.5 last:border-0 md:gap-4"
               style={{ gridTemplateColumns: grid }}
             >
-              {row.cells.map((cell, i) => (
-                <span
-                  key={resource.columns[i]?.key ?? i}
-                  className="min-w-0 truncate text-sm text-ink-body"
-                >
-                  {cell || "—"}
-                </span>
-              ))}
+              {row.cells.map((cell, i) =>
+                row.linkCell?.index === i ? (
+                  <Link
+                    key={resource.columns[i]?.key ?? i}
+                    href={row.linkCell.href}
+                    className="min-w-0 truncate font-label text-[10.5px] uppercase tracking-[0.08em] text-brand"
+                  >
+                    {row.linkCell.label}
+                  </Link>
+                ) : (
+                  <span
+                    key={resource.columns[i]?.key ?? i}
+                    className="min-w-0 truncate text-sm text-ink-body"
+                  >
+                    {cell || "—"}
+                  </span>
+                ),
+              )}
               <div className="flex justify-self-end gap-1.5">
                 <button
                   type="button"

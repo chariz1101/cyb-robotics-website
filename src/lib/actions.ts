@@ -9,6 +9,10 @@ import { createClient } from "@/lib/supabase/server";
 const EDITABLE = [
   "members",
   "events",
+  "event_photos",
+  "projects",
+  "project_steps",
+  "project_files",
   "announcements",
   "files",
   "officer_positions",
@@ -22,6 +26,11 @@ export type ActionResult = { ok: true } | { ok: false; error: string };
 const AFFECTED_PATHS: Record<EditableTable, string[]> = {
   members: ["/", "/officers", "/alumni"],
   events: ["/", "/events"],
+  // Galleries render on the event detail page, which is dynamic by id.
+  event_photos: ["/events"],
+  projects: ["/", "/projects"],
+  project_steps: ["/projects"],
+  project_files: ["/projects"],
   announcements: ["/"],
   files: [],
   officer_positions: ["/officers"],

@@ -56,4 +56,9 @@ export type TableRow = {
   cells: string[];
   /** Raw values, used to populate the edit form. */
   values: Record<string, unknown>;
+  /**
+   * Renders one cell as a link to a sub-page — used by events to reach
+   * their photo gallery. `index` is the position in `cells`.
+   */
+  linkCell?: { index: number; href: string; label: string };
 };
