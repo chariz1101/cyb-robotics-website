@@ -1,10 +1,10 @@
 import {
   PageHeader,
   SectionRule,
-  OfficerCard,
   MemberChip,
   EmptyState,
 } from "@/components/ui";
+import { PersonCard } from "@/components/cards";
 import { CURRENT_TERM, getOfficers, getGeneralMembers } from "@/lib/queries";
 
 export const metadata = {
@@ -29,9 +29,9 @@ export default async function OfficersPage() {
       {officers.executive.length === 0 ? (
         <EmptyState>No officers have been published yet.</EmptyState>
       ) : (
-        <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+        <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))]">
           {officers.executive.map((m) => (
-            <OfficerCard
+            <PersonCard
               key={m.id}
               name={m.full_name}
               position={m.officer_positions?.title ?? m.position}
@@ -45,9 +45,9 @@ export default async function OfficersPage() {
       {officers.board.length > 0 && (
         <>
           <SectionRule className="mt-14 mb-5">Board members</SectionRule>
-          <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+          <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))]">
             {officers.board.map((m) => (
-              <OfficerCard
+              <PersonCard
                 key={m.id}
                 name={m.full_name}
                 position={m.officer_positions?.title ?? m.position}
@@ -63,7 +63,7 @@ export default async function OfficersPage() {
       {members.length === 0 ? (
         <EmptyState>The general membership roster is being compiled.</EmptyState>
       ) : (
-        <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
+        <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))]">
           {members.map((m) => (
             <MemberChip
               key={m.id}
@@ -80,9 +80,9 @@ export default async function OfficersPage() {
           <SectionRule className="mt-14 mb-5">Adviser</SectionRule>
           {/* auto-fill, not auto-fit: keeps the lone adviser card at card
               width instead of stretching it across the row. */}
-          <div className="grid gap-5 [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]">
+          <div className="grid gap-5 [grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr))]">
             {officers.adviser.map((m) => (
-              <OfficerCard
+              <PersonCard
                 key={m.id}
                 name={m.full_name}
                 position={m.officer_positions?.title ?? m.position}

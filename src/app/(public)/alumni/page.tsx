@@ -21,7 +21,7 @@ export default async function AlumniPage() {
           </EmptyState>
         </div>
       ) : (
-        <div className="mt-9 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+        <div className="mt-9 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
           {alumni.map((person) => (
             <Card key={person.id} className="flex gap-4 p-5">
               <span className="hatch flex h-[62px] w-[62px] flex-none items-center justify-center border border-ink/10 text-base font-semibold text-muted">

@@ -54,12 +54,15 @@ The single most common way a project like this misses its date is treating conte
 ### Track A — Build
 - [x] Translate the branding into Tailwind theme tokens (`globals.css` `@theme`)
 - [x] Build `src/lib/supabase/` — browser client, server client, typed queries
-- [~] Types hand-written in `src/lib/database.types.ts`; regenerate with `supabase gen types`
+- [~] Types hand-written in `src/lib/database.types.ts`. `npm run types:generate`
+      regenerates them from the live schema — needs `SUPABASE_PROJECT_ID` and a
+      logged-in Supabase CLI, so it has to be run locally
 - [x] Build the shared shell: sticky header, nav, mobile hamburger, footer
-- [ ] Build the reusable primitives the wireframes call for: `Card`, `SectionHeading`,
+- [x] Build the reusable primitives the wireframes call for: `Card`, `SectionHeading`,
       `PersonCard`, `EventCard`, `ProjectCard`, `Button`, `EmptyState`
 - [x] Set up the base metadata / SEO defaults and favicon
-- [ ] Verify the shell on a real phone, not just a narrow browser window
+- [x] Verify the shell at phone width, including the nav — covered by
+      `npm run check:responsive`
 
 ### Track B — Content & Coordination
 - [ ] First follow-up on officer photos (expect ~40% response after one ask)
@@ -84,7 +87,7 @@ The single most common way a project like this misses its date is treating conte
 - [x] Projects — public showcase grid, plus a project detail page
 - [x] Events — upcoming and past, with a per-event detail page and photo gallery
 - [x] Handle every empty state (no upcoming events, no announcements, no alumni yet)
-- [ ] Make all public pages responsive
+- [x] Make all public pages responsive
 
 ### Track B — Content & Coordination
 - [ ] **Officer photo deadline lands this week** — chase the stragglers individually
@@ -222,6 +225,7 @@ silently once already:
 |---|---|
 | `check:officers` | Officer ordering — shuffles the real roster and asserts President first, adviser last |
 | `check:images` | Upload resizing — runs the shipped function in Chromium against generated photos |
+| `check:responsive` | Horizontal overflow at 390/768/1400px and the mobile nav (needs `npm run dev` running) |
 
 ---
 

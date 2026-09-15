@@ -1,20 +1,13 @@
 import Link from "next/link";
 
-import { Card, Placeholder, EmptyState } from "@/components/ui";
+import { Card, EmptyState } from "@/components/ui";
+import { Button, ProjectCard, SectionHeading, formatDate } from "@/components/cards";
 import {
   getAnnouncements,
   getEvents,
   getProjects,
   getStats,
 } from "@/lib/queries";
-
-function formatDate(value: string) {
-  return new Date(value).toLocaleDateString("en-PH", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
 
 export default async function HomePage() {
   const [stats, featured, upcoming, announcements] = await Promise.all([
@@ -57,16 +50,13 @@ export default async function HomePage() {
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
                 href="/officers"
-                className="rounded-[2px] bg-canvas px-6.5 py-4 text-[14.5px] font-semibold text-brand-deep transition-opacity hover:opacity-90"
+                className="rounded-[2px] bg-canvas px-5 py-3.5 text-[14.5px] font-semibold text-brand-deep transition-opacity hover:opacity-90 sm:px-6.5 sm:py-4"
               >
                 Meet the team
               </Link>
-              <Link
-                href="/projects"
-                className="rounded-[2px] border border-canvas/34 px-6.5 py-4 text-[14.5px] font-medium text-canvas transition-colors hover:bg-white/10"
-              >
+              <Button href="/projects" tone="onDark">
                 Explore projects
-              </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -97,50 +87,27 @@ export default async function HomePage() {
 
       {/* Featured projects */}
       <section className="container-page pt-19">
-        <div className="flex flex-wrap items-baseline justify-between gap-5 border-b border-ink/14 pb-4.5">
-          <h2 className="text-[30px] font-bold">Featured projects</h2>
-          <Link
-            href="/projects"
-            className="font-label text-[11px] uppercase tracking-[0.12em] text-brand"
-          >
-            View all →
-          </Link>
-        </div>
+        <SectionHeading
+          aside={
+            <Link
+              href="/projects"
+              className="font-label text-[11px] uppercase tracking-[0.12em] text-brand"
+            >
+              View all →
+            </Link>
+          }
+        >
+          Featured projects
+        </SectionHeading>
 
         {featured.length === 0 ? (
           <div className="mt-7">
             <EmptyState>No projects have been published yet.</EmptyState>
           </div>
         ) : (
-          <div className="mt-7 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+          <div className="mt-7 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
             {featured.map((project) => (
-              <Link key={project.id} href={`/projects/${project.id}`}>
-                <Card interactive className="flex h-full flex-col">
-                  {project.cover_image_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={project.cover_image_url}
-                      alt=""
-                      className="h-[170px] w-full object-cover"
-                    />
-                  ) : (
-                    <Placeholder label="project cover" className="h-[170px]" />
-                  )}
-                  <div className="flex flex-1 flex-col gap-2 p-5 pb-5.5">
-                    {project.category && (
-                      <span className="label-sm text-brand">
-                        {project.category}
-                      </span>
-                    )}
-                    <h3 className="text-[18px] font-semibold">{project.title}</h3>
-                    {project.description && (
-                      <p className="text-sm leading-[1.55] text-ink-soft">
-                        {project.description}
-                      </p>
-                    )}
-                  </div>
-                </Card>
-              </Link>
+              <ProjectCard key={project.id} project={project} coverHeight={170} />
             ))}
           </div>
         )}

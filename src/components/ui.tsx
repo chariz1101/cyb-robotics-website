@@ -13,7 +13,9 @@ export function PageHeader({
   return (
     <>
       <p className="label text-brand">{eyebrow}</p>
-      <h1 className="mt-3.5 max-w-[22ch] text-[46px] font-bold">{title}</h1>
+      <h1 className="mt-3.5 max-w-[22ch] text-[32px] font-bold sm:text-[38px] lg:text-[46px]">
+        {title}
+      </h1>
       {children}
     </>
   );
@@ -45,12 +47,17 @@ export function SectionRule({
 export function Placeholder({
   label,
   className = "",
+  style,
 }: {
   label: string;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
-    <div className={`hatch flex items-center justify-center ${className}`}>
+    <div
+      style={style}
+      className={`hatch flex items-center justify-center ${className}`}
+    >
       <span className="label-sm text-muted">{label}</span>
     </div>
   );
