@@ -34,7 +34,7 @@ export default function AboutPage() {
         />
       </div>
 
-      <div className="mt-14 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
+      <div className="mt-14 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
         <div className="bg-brand-deep p-8.5">
           <h2 className="mb-3.5 font-label text-xs uppercase tracking-[0.14em] text-brand-soft">
             Mission
@@ -58,7 +58,7 @@ export default function AboutPage() {
       </div>
 
       <Card className="mt-14 grid items-center gap-8.5 p-8.5 md:[grid-template-columns:minmax(0,auto)_minmax(0,1fr)]">
-        <div className="flex gap-3.5">
+        <div className="flex flex-wrap gap-3.5">
           <Placeholder
             label="CICT seal"
             className="h-22 w-22 border border-ink/12 text-center"

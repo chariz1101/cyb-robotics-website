@@ -9,7 +9,9 @@
     "lint": "eslint",
     "check:officers": "node --experimental-strip-types scripts/check-officer-order.mjs",
     "check:images": "node scripts/check-image-resize.mjs",
-    "check": "npm run check:officers && npm run check:images"
+    "check": "npm run check:officers && npm run check:images",
+    "check:responsive": "node scripts/check-responsive.mjs",
+    "types:generate": "supabase gen types typescript --project-id \"$SUPABASE_PROJECT_ID\" > src/lib/database.types.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
