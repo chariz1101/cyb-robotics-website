@@ -24,8 +24,12 @@
   --color-ink: #0b0d0c; /* body text and the dark header/footer */
   --color-ink-body: #31362f; /* long-form paragraphs */
   --color-ink-soft: #4a504b; /* card copy */
-  --color-muted: #6b726c; /* meta, captions */
-  --color-faint: #8a918b;
+  /* Both greys are a shade darker than the canvas values. At the canvas
+     originals (#6B726C / #8A918B) they measured 4.40:1 and 3.09:1 against
+     the lighter surfaces — below the 4.5:1 AA floor for the small text
+     they are used on. See npm run check:contrast. */
+  --color-muted: #666c66; /* meta, captions */
+  --color-faint: #6e746e; /* timestamps, sizes, disabled */
 
   /* --- Status --- */
   --color-danger: #a32020;

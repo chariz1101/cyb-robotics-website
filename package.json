@@ -9,10 +9,14 @@
     "lint": "eslint",
     "check:officers": "node --experimental-strip-types scripts/check-officer-order.mjs",
     "check:images": "node scripts/check-image-resize.mjs",
-    "check": "npm run check:officers && npm run check:images",
+    "check": "npm run check:officers && npm run check:images && npm run check:contrast",
     "check:responsive": "node scripts/check-responsive.mjs",
     "types:generate": "supabase gen types typescript --project-id \"$SUPABASE_PROJECT_ID\" > src/lib/database.types.ts",
-    "check:crud": "node scripts/check-crud.mjs"
+    "check:crud": "node scripts/check-crud.mjs",
+    "check:a11y": "node scripts/check-a11y.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:rls": "node scripts/check-rls.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -22,10 +26,12 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "axe-core": "^4.13.0",
     "esbuild": "^0.28.2",
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
