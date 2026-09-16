@@ -21,6 +21,7 @@ export default async function AdminEventsPage() {
       { key: "event_date", label: "Date", width: "minmax(0,0.8fr)" },
       { key: "status", label: "Status", width: "minmax(0,0.7fr)" },
       { key: "is_published", label: "Public", width: "minmax(0,0.6fr)" },
+      { key: "photos", label: "Gallery", width: "minmax(0,0.6fr)" },
     ],
     fields: [
       { name: "title", label: "Title", type: "text", required: true },
@@ -56,7 +57,9 @@ export default async function AdminEventsPage() {
       e.event_date,
       e.status,
       e.is_published ? "Yes" : "Draft",
+      "",
     ],
+    linkCell: { index: 4, href: `/admin/events/${e.id}/photos`, label: "Photos →" },
     values: e,
   }));
 

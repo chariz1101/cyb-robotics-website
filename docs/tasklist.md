@@ -109,13 +109,13 @@ The single most common way a project like this misses its date is treating conte
       (Next 16 renamed `middleware.ts` to `proxy.ts`; same functionality)
 - [x] Dashboard layout and navigation
 - [x] Member/officer management — add, edit, remove, assign position, toggle published
-- [~] Event management — add, edit, remove, publish/unpublish done; **photo gallery
-      (`event_photos`) not yet editable**
+- [x] Event management — add, edit, remove, publish/unpublish, manage photo gallery
 - [x] Announcement management — create, edit, delete, publish/unpublish, set audience
 - [x] File upload interface for the members directory, with category tagging
 - [x] Image upload with client-side resize before it reaches storage
 - [x] Confirm every write path goes through RLS as the signed-in admin, **not** the service role key
-- [ ] End-to-end test: create → appears publicly; unpublish → disappears
+- [x] End-to-end test: create → appears publicly; unpublish → disappears —
+      `npm run check:crud` (needs a live site and admin credentials)
 
 ### Track B — Content & Coordination
 - [ ] Adviser reviews the public text drafted in Weeks 2–3
@@ -128,22 +128,24 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 5 — Members Portal *(Oct 5–11)* ← next
+## Week 5 — Members Portal *(Oct 5–11)* — Track A done
 
 **Goal:** the unlisted members tier is complete and useful.
 
 ### Track A — Build
-- [ ] Build the unlisted route using the secret-slug pattern
-- [ ] `noindex` meta tag on every members route
-- [ ] `robots.txt` disallow, and verify the route is absent from the sitemap
-- [ ] Directory section — event documentation, letters, programmes, branding, filterable by category
-- [ ] File download and preview for PDFs, images, and code files
-- [ ] Project guides section with step-by-step instructions and syntax-highlighted code:
-  - [ ] Ultrasonic alarm
-  - [ ] LED lights project
-  - [ ] Arduino-based game
-- [ ] Copy-to-clipboard on every code block
-- [ ] Members-audience announcements surface here
+- [x] Build the unlisted route using the secret-slug pattern
+- [x] `noindex` meta tag on every members route
+- [x] `robots.txt` disallow, and verified the route is absent from the sitemap
+- [x] Directory section — event documentation, letters, programmes, branding, filterable by category
+- [x] File download and preview for PDFs, images, and code files
+- [x] Project guides section with step-by-step instructions and a code viewer.
+      The three guides themselves are content — officers add them from
+      **Admin → Projects**, which now manages steps and sample-code files:
+  - [ ] Ultrasonic alarm *(content)*
+  - [ ] LED lights project *(content)*
+  - [ ] Arduino-based game *(content)*
+- [x] Copy-to-clipboard on every code block
+- [x] Members-audience announcements surface here
 
 ### Track B — Content & Coordination
 - [ ] Write the three project guides — steps, wiring diagrams, tested sample code
@@ -155,7 +157,7 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 6 — Hardening & Launch *(Oct 12–18)*
+## Week 6 — Hardening & Launch *(Oct 12–18)* ← next
 
 **Goal:** ship it, and make sure next year's officers can keep it running.
 
@@ -226,6 +228,7 @@ silently once already:
 | `check:officers` | Officer ordering — shuffles the real roster and asserts President first, adviser last |
 | `check:images` | Upload resizing — runs the shipped function in Chromium against generated photos |
 | `check:responsive` | Horizontal overflow at 390/768/1400px and the mobile nav (needs `npm run dev` running) |
+| `check:crud` | Admin create → public → unpublish → delete. Needs `CHECK_BASE_URL`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` |
 
 ---
 

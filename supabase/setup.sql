@@ -501,3 +501,15 @@ from (values
     ('Adviser',                                        15)
   ) as v(title, ord)
 where op.title = v.title and op.term_year = '2026-2027';
+
+
+--
+-- The members-portal guide layout shows a parts list above the steps
+-- ("1x Arduino Uno, 1x HC-SR04, jumper wires…"). There was nowhere to
+-- store it: description is prose and the steps are instructions.
+
+alter table public.projects
+  add column if not exists parts_list text;
+
+comment on column public.projects.parts_list is
+  'Components needed for a members-guide project, one per line.';
