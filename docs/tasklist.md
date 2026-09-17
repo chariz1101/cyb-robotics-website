@@ -281,11 +281,24 @@ flatten it.
 
 | Role | Family | Notes |
 |---|---|---|
-| Display | **Montserrat** | h1–h4, buttons, eyebrows. Weights 600/700 |
-| Body | **Archivo** | Paragraphs and UI. Weights 400/500 |
+| Display | **Bebas Neue** | h1–h4 and the large stat numerals. One weight only |
+| Body & UI | **Montserrat** | Paragraphs, buttons, labels. Weights 400–600 |
+| Lead copy | **Montserrat Light** (300) | The `lead` utility — large secondary copy only |
 | Mono | system mono | Code blocks in the members-portal guides |
 
-Scale in use: 60 / 46 / 44 / 32 / 30 / 20 / 19 / 17 / 16 / 15 / 14.5 / 14 / 13.5 / 13 px.
+**Bebas Neue ships a single weight (400).** There is no Bold cut, so a
+`font-bold` on a Bebas heading only asks the browser to synthesise one,
+which smears the letterforms. Headings carry weight through size and the
+face's own condensed density instead.
+
+Bebas is also uppercase-only — lowercase input renders as capitals — and its
+cap-height-to-em ratio makes it read about 15% smaller than a normal face at
+the same pixel size, so heading sizes were scaled up to compensate. It wants
+slightly open tracking (`0.01em`), the opposite of the negative tracking the
+previous face used.
+
+Montserrat Light is deliberately not available as a general body style: at
+300 it only holds up at size.
 
 ### Motifs — the details that make it look designed
 

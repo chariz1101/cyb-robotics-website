@@ -36,10 +36,13 @@
   --color-accent: #d97757;
 
   /* --- Type ---
-     Archivo carries headings AND body. Montserrat is used ONLY for the
-     small uppercase label text (eyebrows, nav meta, stat labels). */
-  --font-sans: var(--font-archivo), Helvetica, sans-serif;
-  --font-label: var(--font-montserrat), var(--font-archivo), sans-serif;
+     Bebas Neue carries display headings. Montserrat carries body, UI and
+     the small uppercase labels; Montserrat Light (300) is reserved for
+     lead paragraphs and other large secondary copy, where a thin weight
+     still reads cleanly. */
+  --font-display: var(--font-bebas), Impact, "Haettenschweiler", sans-serif;
+  --font-sans: var(--font-montserrat), Helvetica, sans-serif;
+  --font-label: var(--font-montserrat), sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
   /* --- Layout --- */
@@ -70,17 +73,24 @@
     color: var(--color-brand-deep);
   }
 
-  /* Archivo, tightened. The canvas uses negative tracking at every
-     heading size; without it the display type reads noticeably wider. */
+  /* Bebas Neue is condensed and uppercase-only, so it needs the opposite
+     treatment to the previous face: slightly open tracking rather than
+     the negative tracking that suited Archivo, which would crush these
+     letterforms together. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
   h1 {
-    letter-spacing: -0.028em;
-    line-height: 1.05;
+    line-height: 1.0;
   }
-  h2 {
-    letter-spacing: -0.02em;
-  }
+  h2,
   h3 {
-    letter-spacing: -0.012em;
+    line-height: 1.1;
   }
 }
 
@@ -132,6 +142,17 @@
     var(--color-hatch) 0 8px,
     var(--color-surface-alt) 8px 16px
   );
+}
+
+/**
+ * Lead paragraph — Montserrat Light.
+ *
+ * 300 is only legible at size; it is deliberately not available as a
+ * general body style.
+ */
+@utility lead {
+  font-weight: 300;
+  letter-spacing: 0.005em;
 }
 
 /** The officer card's photo panel: deep green with a subtle weave. */

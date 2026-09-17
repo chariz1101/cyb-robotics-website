@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Montserrat, Archivo } from "next/font/google";
+import { Bebas_Neue, Montserrat } from "next/font/google";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+/**
+ * Bebas Neue is published in a single weight (400). There is no Bold cut,
+ * so `font-bold` on a Bebas heading would only ask the browser to
+ * synthesise one, which smears the letterforms. Headings carry weight
+ * through size and the face's own condensed density instead.
+ */
+const bebasNeue = Bebas_Neue({
+  variable: "--font-bebas",
+  weight: "400",
   subsets: ["latin"],
 });
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
@@ -25,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${archivo.variable} h-full antialiased`}
+      className={`${bebasNeue.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-canvas">{children}</body>
     </html>

@@ -13,7 +13,7 @@ export default function AboutPage() {
 
       <div className="mt-13 grid items-start gap-11 lg:grid-cols-2">
         <div>
-          <h2 className="mb-4 font-label text-[13px] font-semibold uppercase tracking-[0.1em] text-brand">
+          <h2 className="mb-4 font-label text-[13px] uppercase tracking-[0.1em] text-brand">
             Our history
           </h2>
           <p className="mb-4 text-base leading-[1.68] text-ink-body">
@@ -39,7 +39,7 @@ export default function AboutPage() {
           <h2 className="mb-3.5 font-label text-xs uppercase tracking-[0.14em] text-brand-soft">
             Mission
           </h2>
-          <p className="text-[19px] leading-[1.55] text-canvas">
+          <p className="lead text-[19px] leading-[1.55] text-canvas">
             To give every CICT student a hands-on path into robotics — through
             open workshops, mentored builds, and projects that solve real
             problems on campus and beyond.
@@ -49,7 +49,7 @@ export default function AboutPage() {
           <h2 className="mb-3.5 font-label text-xs uppercase tracking-[0.14em] text-brand">
             Vision
           </h2>
-          <p className="text-[19px] leading-[1.55] text-ink-body">
+          <p className="lead text-[19px] leading-[1.55] text-ink-body">
             A student community recognized regionally for engineering rigor,
             generous mentorship, and technology built in service of Western
             Visayas.
@@ -69,7 +69,7 @@ export default function AboutPage() {
           />
         </div>
         <div>
-          <h2 className="mb-2.5 text-[20px] font-semibold">Affiliation</h2>
+          <h2 className="mb-2.5 text-[22px]">Affiliation</h2>
           <p className="max-w-[70ch] text-[15px] leading-[1.65] text-ink-soft">
             Cyb Robotics is an accredited student organization under the College
             of Information and Communications Technology, West Visayas State

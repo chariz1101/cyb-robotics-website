@@ -38,10 +38,10 @@ export default async function HomePage() {
                 CICT · West Visayas State University
               </span>
             </div>
-            <h1 className="text-[40px] font-bold text-canvas md:text-[60px] md:leading-[1.02]">
+            <h1 className="text-[40px] text-canvas md:text-[60px] md:leading-[1.02]">
               Building machines that think, one prototype at a time.
             </h1>
-            <p className="mt-6 max-w-[52ch] text-[17px] leading-[1.6] text-canvas/76">
+            <p className="lead mt-6 max-w-[52ch] text-[17px] leading-[1.6] text-canvas/76">
               Cyb Robotics is the student robotics and embedded systems
               organization of the College of Information and Communications
               Technology — a workshop for hands-on learning, competition, and
@@ -74,7 +74,7 @@ export default async function HomePage() {
               key={stat.label}
               className="-ml-px border-l border-canvas/12 py-8.5 pl-6.5"
             >
-              <dd className="text-[32px] font-bold leading-none tracking-[-0.03em] text-canvas md:text-[44px]">
+              <dd className="font-display text-[36px] leading-none tracking-[0.01em] text-canvas md:text-[52px]">
                 {stat.value}
               </dd>
               <dt className="label mt-2.5 block tracking-[0.16em] text-brand-mid">
@@ -120,7 +120,7 @@ export default async function HomePage() {
             <span className="label-sm tracking-[0.16em] text-brand-pale">
               Upcoming event
             </span>
-            <h3 className="max-w-[24ch] text-[28px] font-bold text-canvas">
+            <h3 className="max-w-[24ch] text-[32px] text-canvas">
               {nextEvent.title}
             </h3>
             <p className="font-label text-xs tracking-[0.06em] text-brand-tint">
@@ -147,7 +147,7 @@ export default async function HomePage() {
             <span className="label-sm tracking-[0.16em] text-brand">
               Latest announcement
             </span>
-            <h3 className="text-[20px] font-semibold">{latest.title}</h3>
+            <h3 className="text-[22px]">{latest.title}</h3>
             <p className="text-[14.5px] leading-[1.6] text-ink-soft">
               {latest.content}
             </p>

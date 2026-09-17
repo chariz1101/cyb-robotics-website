@@ -63,7 +63,7 @@ export function FormModal({
         className="w-full max-w-[560px] bg-canvas"
       >
         <div className="flex items-center gap-3.5 border-b border-ink/12 px-6.5 py-5.5">
-          <h2 className="text-[19px] font-semibold">{title}</h2>
+          <h2 className="text-[21px]">{title}</h2>
           <button
             type="button"
             onClick={onCancel}

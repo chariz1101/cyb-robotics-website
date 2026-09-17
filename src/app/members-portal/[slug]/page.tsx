@@ -32,7 +32,7 @@ export default async function PortalDirectoryPage(
               <p className="label-sm tracking-[0.14em] text-brand">
                 Announcement
               </p>
-              <h2 className="mt-2 text-[17px] font-semibold">{a.title}</h2>
+              <h2 className="mt-2 text-[19px]">{a.title}</h2>
               <p className="mt-1.5 text-sm leading-[1.6] text-ink-soft">
                 {a.content}
               </p>
