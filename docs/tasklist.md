@@ -157,23 +157,29 @@ The single most common way a project like this misses its date is treating conte
 
 ---
 
-## Week 6 — Hardening & Launch *(Oct 12–18)* ← next
+## Week 6 — Hardening & Launch *(Oct 12–18)* — engineering done
 
 **Goal:** ship it, and make sure next year's officers can keep it running.
 
 ### Quality
-- [ ] Full walkthrough of all three tiers on desktop
+- [~] Automated coverage of all three tiers; a human walkthrough is still worth doing
 - [ ] Full walkthrough on real mobile devices (iOS and Android)
-- [ ] Cross-browser check — Chrome, Firefox, Safari, Edge
-- [ ] Lighthouse pass; fix anything under 90 on performance or accessibility
-- [ ] Keyboard navigation and alt text on every image
-- [ ] Fix all broken links and layout breaks
+- [ ] Cross-browser check — **Safari and Firefox are manual**; only Chromium
+      is available to the automated checks
+- [~] Automated a11y pass clean (`check:a11y`, axe-core) and every colour
+      pairing meets AA (`check:contrast`). **Lighthouse itself still needs
+      running against a deployment**
+- [x] Alt text on every image (verified); keyboard focus states present on
+      all interactive elements
+- [x] `check:links` crawls the public site for dead internal links;
+      `check:responsive` covers layout breaks
 
 ### Security
-- [ ] Re-audit RLS: confirm no anonymous write is possible on any table
-- [ ] Confirm the service role key appears nowhere in client-side code or the repo
-- [ ] Confirm `.env.local` is gitignored and was never committed
-- [ ] Verify the members portal does not appear in search results or the sitemap
+- [x] `npm run check:rls` attempts insert/update/delete on every table with
+      the anon key and asserts each is rejected — **run it against production**
+- [x] Confirm the service role key appears nowhere in client-side code or the repo
+- [x] Confirm `.env.local` is gitignored and was never committed
+- [x] Verified the portal is absent from the sitemap and disallowed in robots.txt
 - [ ] Export a full database backup
 
 ### Content Sign-off
@@ -188,11 +194,12 @@ The single most common way a project like this misses its date is treating conte
 - [ ] Share the members portal link through official channels only
 
 ### Handoff — *do not skip this*
-- [ ] Write the admin guide: how to add an event, member, announcement, or file
+- [x] Write the admin guide — `docs/admin-guide.md`
 - [ ] Record a 10-minute screen walkthrough of the admin dashboard
 - [ ] Give **at least two officers** admin access to the site, Supabase, Vercel, and the repo
-- [ ] Document how to rotate the members-portal slug if it leaks
-- [ ] Write down who maintains this after the current batch graduates
+- [x] Document how to rotate the members-portal slug if it leaks —
+      `docs/admin-guide.md`
+- [~] `docs/maintenance.md` has the owners table — **names still to fill in**
 
 **Checkpoint:** live, tested, documented, and owned by more than one person.
 
@@ -229,6 +236,12 @@ silently once already:
 | `check:images` | Upload resizing — runs the shipped function in Chromium against generated photos |
 | `check:responsive` | Horizontal overflow at 390/768/1400px and the mobile nav (needs `npm run dev` running) |
 | `check:crud` | Admin create → public → unpublish → delete. Needs `CHECK_BASE_URL`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` |
+| `check:contrast` | Every colour pairing meets WCAG AA. No server needed |
+| `check:a11y` | axe-core audit; fails on serious and critical violations |
+| `check:links` | Dead internal links across the public site |
+| `check:rls` | Anonymous insert/update/delete rejected on every table. Refuses to run if the database is unreachable |
+
+Full reference, plus the pre-launch checklist, is in `docs/maintenance.md`.
 
 ---
 

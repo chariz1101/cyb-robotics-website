@@ -70,7 +70,7 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-white/12">
-        <p className="container-page label py-4.5 text-[10.5px] tracking-[0.08em] text-canvas/42">
+        <p className="container-page label py-4.5 text-[10.5px] tracking-[0.08em] text-canvas/60">
           © {new Date().getFullYear()} Cyb Robotics Organization · All rights reserved
         </p>
       </div>
