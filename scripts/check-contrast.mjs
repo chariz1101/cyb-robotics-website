@@ -24,7 +24,7 @@ const TOKENS = {
   "ink-body": "#31362F",
   "ink-soft": "#4A504B",
   muted: "#666C66",
-  faint: "#6E746E",
+  faint: "#6C726C",
   danger: "#A32020",
 };
 
@@ -36,6 +36,7 @@ const PAIRS = [
   ["muted", "canvas", "captions"],
   ["muted", "surface", "metadata in cards"],
   ["muted", "surface-alt", "table headers"],
+  ["faint", "canvas", "timestamps on the page background"],
   ["faint", "surface", "timestamps, sizes"],
   ["faint", "surface-sunk", "table footers"],
   ["brand", "canvas", "links and eyebrows"],

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { PortalTabs } from "@/components/portal/tabs";
 import { Card, Placeholder, EmptyState } from "@/components/ui";
+import { StorageImage } from "@/components/storage-image";
 import { getGuides } from "@/lib/queries";
 
 const BADGE: Record<string, string> = {
@@ -38,12 +39,12 @@ export default async function GuidesPage(
               <Card interactive className="flex h-full flex-col">
                 <div className="relative">
                   {guide.cover_image_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={guide.cover_image_url}
-                      alt=""
-                      className="h-[140px] w-full object-cover"
-                    />
+                    <div className="relative h-[140px] w-full">
+                      <StorageImage
+                        src={guide.cover_image_url}
+                        sizes="(min-width: 640px) 340px, 100vw"
+                      />
+                    </div>
                   ) : (
                     <Placeholder label="build photo" className="h-[140px]" />
                   )}

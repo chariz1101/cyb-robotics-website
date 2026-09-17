@@ -101,52 +101,6 @@ export function initialsOf(name: string) {
     .join("");
 }
 
-/**
- * Officer card — portrait, with a deep-green panel carrying the member's
- * initials where their photo will go.
- */
-export function OfficerCard({
-  name,
-  position,
-  detail,
-  photoUrl,
-}: {
-  name: string;
-  position?: string | null;
-  detail?: string | null;
-  photoUrl?: string | null;
-}) {
-  return (
-    <Card>
-      {photoUrl ? (
-        // Supabase Storage hosts these; switch to next/image once the bucket
-        // domain is added to images.remotePatterns in next.config.ts.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={photoUrl}
-          alt=""
-          className="h-[190px] w-full object-cover"
-        />
-      ) : (
-        <div className="hatch-deep flex h-[190px] items-center justify-center">
-          <span className="text-[38px] font-bold tracking-[0.02em] text-brand-soft">
-            {initialsOf(name)}
-          </span>
-        </div>
-      )}
-      <div className="px-4.5 pb-5 pt-4.5">
-        <p className="text-[16.5px] font-semibold tracking-[-0.01em]">{name}</p>
-        {position && (
-          <p className="mt-1.5 font-label text-[11px] uppercase tracking-[0.1em] text-brand">
-            {position}
-          </p>
-        )}
-        {detail && <p className="mt-2 text-[13px] text-muted">{detail}</p>}
-      </div>
-    </Card>
-  );
-}
-
 /** Compact horizontal card for the general membership grid. */
 export function MemberChip({
   name,

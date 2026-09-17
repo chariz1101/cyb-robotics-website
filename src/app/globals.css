@@ -29,7 +29,7 @@
      the lighter surfaces — below the 4.5:1 AA floor for the small text
      they are used on. See npm run check:contrast. */
   --color-muted: #666c66; /* meta, captions */
-  --color-faint: #6e746e; /* timestamps, sizes, disabled */
+  --color-faint: #6c726c; /* timestamps, sizes, disabled */
 
   /* --- Status --- */
   --color-danger: #a32020;

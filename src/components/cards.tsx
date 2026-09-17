@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Card, Placeholder, initialsOf } from "@/components/ui";
+import { StorageImage } from "@/components/storage-image";
 import type { EventRecord, Project } from "@/lib/database.types";
 
 /**
@@ -80,10 +81,9 @@ export function PersonCard({
   return (
     <Card>
       {photoUrl ? (
-        // Supabase Storage hosts these; switch to next/image once the bucket
-        // domain is added to images.remotePatterns in next.config.ts.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={photoUrl} alt="" className="h-[190px] w-full object-cover" />
+        <div className="relative h-[190px] w-full">
+          <StorageImage src={photoUrl} sizes="(min-width: 640px) 280px, 100vw" />
+        </div>
       ) : (
         <div className="hatch-deep flex h-[190px] items-center justify-center">
           <span className="text-[38px] font-bold tracking-[0.02em] text-brand-soft">
@@ -115,13 +115,15 @@ export function ProjectCard({
     <Link href={`/projects/${project.id}`} className="block text-ink">
       <Card interactive className="flex h-full flex-col">
         {project.cover_image_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={project.cover_image_url}
-            alt=""
+          <div
+            className="relative w-full"
             style={{ height: coverHeight }}
-            className="w-full object-cover"
-          />
+          >
+            <StorageImage
+              src={project.cover_image_url}
+              sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+            />
+          </div>
         ) : (
           <Placeholder
             label="project cover"
@@ -166,12 +168,12 @@ export function EventCard({ event }: { event: EventRecord }) {
         className="grid sm:[grid-template-columns:minmax(0,220px)_minmax(0,1fr)]"
       >
         {event.cover_photo_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={event.cover_photo_url}
-            alt=""
-            className="h-[160px] w-full object-cover sm:h-full sm:min-h-[150px]"
-          />
+          <div className="relative h-[160px] w-full sm:h-auto sm:min-h-[150px]">
+            <StorageImage
+              src={event.cover_photo_url}
+              sizes="(min-width: 640px) 220px, 100vw"
+            />
+          </div>
         ) : (
           <Placeholder
             label="cover photo"

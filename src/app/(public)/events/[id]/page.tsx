@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PageHeader } from "@/components/ui";
+import { StorageImage } from "@/components/storage-image";
 import { getEvent } from "@/lib/queries";
 
 export async function generateMetadata(props: PageProps<"/events/[id]">) {
@@ -53,14 +54,13 @@ export default async function EventPage(props: PageProps<"/events/[id]">) {
           <div className="mt-6 grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
             {photos.map((photo) => (
               <figure key={photo.id}>
-                {/* Supabase Storage hosts these; switch to next/image once the
-                    bucket domain is added to images.remotePatterns. */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={photo.photo_url}
-                  alt={photo.caption ?? ""}
-                  className="w-full border border-ink/12 object-cover"
-                />
+                <div className="relative aspect-[4/3] w-full border border-ink/12">
+                  <StorageImage
+                    src={photo.photo_url}
+                    alt={photo.caption ?? ""}
+                    sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+                  />
+                </div>
                 {photo.caption && (
                   <figcaption className="mt-2 text-[13px] text-muted">
                     {photo.caption}
