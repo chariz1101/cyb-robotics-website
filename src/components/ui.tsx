@@ -13,7 +13,7 @@ export function PageHeader({
   return (
     <>
       <p className="label text-brand">{eyebrow}</p>
-      <h1 className="mt-3.5 max-w-[22ch] text-[32px] font-bold sm:text-[38px] lg:text-[46px]">
+      <h1 className="mt-3.5 max-w-[22ch] text-[36px] sm:text-[44px] lg:text-[52px]">
         {title}
       </h1>
       {children}

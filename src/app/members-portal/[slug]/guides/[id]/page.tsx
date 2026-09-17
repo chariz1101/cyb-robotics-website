@@ -56,7 +56,7 @@ export default async function GuidePage(
             {project.difficulty_level}
           </span>
         )}
-        <h1 className="mb-2.5 mt-4 text-[26px] font-bold sm:text-[32px]">
+        <h1 className="mb-2.5 mt-4 text-[30px] sm:text-[36px]">
           {project.title}
         </h1>
         {project.description && (
@@ -86,7 +86,7 @@ export default async function GuidePage(
                 <p className="font-label text-[10.5px] uppercase tracking-[0.14em] text-brand">
                   Step {step.step_number}
                 </p>
-                <h2 className="mb-2 mt-2.5 text-[19px] font-semibold">
+                <h2 className="mb-2 mt-2.5 text-[21px]">
                   {step.title}
                 </h2>
                 <p className="whitespace-pre-line text-[14.5px] leading-[1.65] text-ink-soft">

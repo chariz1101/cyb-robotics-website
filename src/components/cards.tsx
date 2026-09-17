@@ -34,7 +34,7 @@ export function SectionHeading({
     <div
       className={`flex flex-wrap items-baseline justify-between gap-x-5 gap-y-2 border-b border-ink/14 pb-4.5 ${className}`}
     >
-      <h2 className="text-[26px] font-bold sm:text-[30px]">{children}</h2>
+      <h2 className="text-[30px] sm:text-[34px]">{children}</h2>
       {aside}
     </div>
   );
@@ -140,7 +140,7 @@ export function ProjectCard({
               </span>
             )}
           </div>
-          <h3 className="text-[17px] font-semibold sm:text-[18.5px]">
+          <h3 className="text-[19px] sm:text-[20.5px]">
             {project.title}
           </h3>
           {project.description && (
@@ -182,7 +182,7 @@ export function EventCard({ event }: { event: EventRecord }) {
           <p className="font-label text-[11px] uppercase tracking-[0.1em] text-brand">
             {formatDate(event.event_date)}
           </p>
-          <h3 className="text-[19px] font-semibold sm:text-[21px]">
+          <h3 className="text-[21px] sm:text-[23px]">
             {event.title}
           </h3>
           {event.description && (

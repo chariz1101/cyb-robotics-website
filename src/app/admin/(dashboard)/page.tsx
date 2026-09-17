@@ -63,7 +63,7 @@ export default async function AdminDashboard() {
   return (
     <div>
       <p className="label tracking-[0.16em] text-muted">Dashboard</p>
-      <h1 className="mt-2.5 text-[32px] font-bold">
+      <h1 className="mt-2.5 text-[36px]">
         Welcome back, {firstNameOf(admin.full_name, admin.email)}
       </h1>
 
@@ -74,7 +74,7 @@ export default async function AdminDashboard() {
             href={stat.href}
             className="border border-ink/12 bg-surface p-5 transition-colors hover:border-brand"
           >
-            <p className="text-[32px] font-bold tracking-[-0.03em] text-brand-deep">
+            <p className="font-display text-[36px] tracking-[0.01em] text-brand-deep">
               {stat.value}
             </p>
             <p className="label-sm mt-2 tracking-[0.12em] text-muted">

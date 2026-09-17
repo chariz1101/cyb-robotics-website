@@ -77,7 +77,7 @@ export function DataTable({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="label tracking-[0.16em] text-muted">Manage</p>
-          <h1 className="mt-2.5 text-[30px] font-bold">{resource.title}</h1>
+          <h1 className="mt-2.5 text-[34px]">{resource.title}</h1>
         </div>
         <button
           type="button"

@@ -17,7 +17,7 @@ export default function PortalLockedPage() {
     <div className="flex flex-1 items-center justify-center px-6 py-20">
       <div className="max-w-[440px] text-center">
         <p className="label text-brand">Members Portal</p>
-        <h1 className="mt-3.5 text-[32px] font-bold">This page is unlisted.</h1>
+        <h1 className="mt-3.5 text-[36px]">This page is unlisted.</h1>
         <p className="mt-5 text-[15px] leading-[1.7] text-ink-soft">
           The members portal is reachable only through its full link, which is
           shared with current members through official Cyb Robotics channels.

@@ -58,7 +58,7 @@ export default async function GuidesPage(
                   )}
                 </div>
                 <div className="flex flex-1 flex-col gap-2 p-4.5">
-                  <h3 className="text-[17px] font-semibold">{guide.title}</h3>
+                  <h3 className="text-[19px]">{guide.title}</h3>
                   {guide.description && (
                     <p className="text-[13.5px] leading-[1.55] text-ink-soft">
                       {guide.description}

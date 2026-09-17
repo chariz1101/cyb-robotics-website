@@ -75,6 +75,8 @@ host is unreachable.
       secret slug
 - [x] `sitemap.xml` contains no portal or admin URL
 - [x] Colour pairings meet WCAG AA (`check:contrast`)
+- [x] Typefaces: Bebas Neue for display, Montserrat for body and UI,
+      Montserrat Light for lead copy
 - [x] No serious or critical axe violations on the pages reachable without
       credentials
 

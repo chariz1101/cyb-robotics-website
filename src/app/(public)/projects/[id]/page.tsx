@@ -51,7 +51,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[id]">) {
               <li key={step.id}>
                 <Card className="p-6">
                   <p className="label-sm text-brand">Step {step.step_number}</p>
-                  <h3 className="mt-2 text-[18px] font-semibold">{step.title}</h3>
+                  <h3 className="mt-2 text-[20px]">{step.title}</h3>
                   <p className="mt-2 whitespace-pre-line text-sm leading-[1.6] text-ink-soft">
                     {step.instructions}
                   </p>
