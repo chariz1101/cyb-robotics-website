@@ -141,7 +141,9 @@ The single most common way a project like this misses its date is treating conte
 - [x] Project guides section with step-by-step instructions and a code viewer.
       The three guides themselves are content — officers add them from
       **Admin → Projects**, which now manages steps and sample-code files:
-  - [ ] Ultrasonic alarm *(content)*
+  - [ ] Ultrasonic alarm — written as "Collision-Detecting Alarm" and seeded by
+        migration `0007`; still needs `supabase/seed/collision-alarm.ino` uploaded
+        and a build-through *(content)*
   - [ ] LED lights project *(content)*
   - [ ] Arduino-based game *(content)*
 - [x] Copy-to-clipboard on every code block

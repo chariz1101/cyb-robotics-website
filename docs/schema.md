@@ -316,6 +316,10 @@ The runnable SQL lives in `supabase/migrations/`:
 | `0001_initial_schema.sql` | Tables, constraints, indexes, `updated_at` triggers, `is_admin()` helper, all RLS policies |
 | `0002_storage_buckets.sql` | Creates the five storage buckets and their read/write policies |
 | `0003_seed_officer_positions.sql` | Optional seed data for officer titles |
+| `0004_officer_roster_2026_2027.sql` | Officer grouping columns and the AY 2026-2027 roster |
+| `0005_officer_display_order.sql` | Reorders the officer positions by rank |
+| `0006_project_parts_list.sql` | Adds `projects.parts_list` for guide components |
+| `0007_seed_collision_alarm_project.sql` | Optional seed data: the "Collision-Detecting Alarm" guide (project + steps) |
 
 Run them in order in the Supabase SQL Editor, or apply with `supabase db push`.
 
