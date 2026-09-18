@@ -88,6 +88,12 @@ These appear in the members portal directory, searchable and filterable.
 6. Under *Sample code & downloads*, upload the `.ino` file. It appears in the
    guide with a copy button and a download link.
 
+**Collision-Detecting Alarm** is already written for you — migration `0007`
+seeds the project, its parts list and its six steps. Only the sketch is
+missing, because code files live in storage: open the project's **Steps →**
+page and upload `supabase/seed/collision-alarm.ino` under *Sample code &
+downloads*.
+
 ---
 
 ## Changing the officer order
