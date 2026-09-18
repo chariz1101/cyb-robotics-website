@@ -18,6 +18,25 @@
 -- by their (project_id, step_number) unique constraint.
 
 -- ------------------------------------------------------------
+-- 0. Prerequisite check
+-- ------------------------------------------------------------
+-- supabase/setup.sql only bundles 0001-0003, so a database set up from
+-- it has no parts_list column and the insert below fails on a bare
+-- "column ... does not exist". Say which file to run instead.
+do $$
+begin
+  if not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'projects'
+      and column_name = 'parts_list'
+  ) then
+    raise exception
+      'projects.parts_list is missing: run supabase/migrations/0006_project_parts_list.sql before this file.';
+  end if;
+end $$;
+
+-- ------------------------------------------------------------
 -- 1. The project
 -- ------------------------------------------------------------
 insert into public.projects (

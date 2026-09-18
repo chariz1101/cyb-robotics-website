@@ -322,6 +322,10 @@ The runnable SQL lives in `supabase/migrations/`:
 | `0007_seed_collision_alarm_project.sql` | Optional seed data: the "Collision-Detecting Alarm" guide (project + steps) |
 
 Run them in order in the Supabase SQL Editor, or apply with `supabase db push`.
+`supabase/setup.sql` is a shortcut for a fresh project, but it only bundles
+`0001`-`0003` — `0004` onwards still have to be run one by one, in order. A
+database that skipped them will fail on a missing column rather than on
+anything to do with the query you pasted.
 
 **Implementation notes**
 
