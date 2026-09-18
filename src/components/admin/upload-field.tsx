@@ -44,6 +44,11 @@ export function UploadField({
         {value ? (
           <div className="flex items-center gap-3.5 text-left">
             {preview && (
+              /* Deliberately not next/image: this previews whatever URL the
+                 record already holds, which for older rows may be a host
+                 outside images.remotePatterns — next/image would refuse it
+                 and the admin would see a broken preview instead of their
+                 file. It is a 56px thumbnail on an admin-only screen. */
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={value}

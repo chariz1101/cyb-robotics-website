@@ -61,6 +61,13 @@ CHECK_BASE_URL=https://<preview>.vercel.app npm run check:responsive
 cannot reach the database, because a rejected write proves nothing when the
 host is unreachable.
 
+**Read the "NOT AUDITED / NOT CHECKED / NOT CRAWLED" line at the end of each
+browser check.** A page whose data fails to load still renders the error
+boundary, which is valid, accessible, correctly laid out HTML — so those
+checks would otherwise report a clean pass for a broken page. They detect the
+boundary and name the pages they did not actually cover. A run that lists
+pages there has not checked your site; it has checked an error screen.
+
 ---
 
 ## Pre-launch checklist

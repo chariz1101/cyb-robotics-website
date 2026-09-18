@@ -46,6 +46,13 @@ for (const path of PATHS) {
   }
   await page.waitForTimeout(500);
 
+  // A rendered error boundary is valid, accessible HTML — auditing it
+  // would report a clean pass for a page that is actually broken.
+  if (await page.locator("[data-page-error]").count()) {
+    skipped.push(`${path} (error boundary)`);
+    continue;
+  }
+
   const { violations } = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
     .analyze();
@@ -72,6 +79,6 @@ for (const path of PATHS) {
 await browser.close();
 
 if (skipped.length) {
-  console.log(`\nSkipped (needs Supabase credentials): ${skipped.join(", ")}`);
+  console.log(`\nNOT AUDITED — these pages did not render: ${skipped.join(", ")}`);
 }
 process.exit(failed ? 1 : 0);

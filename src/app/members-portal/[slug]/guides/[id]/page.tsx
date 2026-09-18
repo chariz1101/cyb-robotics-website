@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { CodeBlock } from "@/components/portal/code-block";
 import { Card, Placeholder } from "@/components/ui";
+import { StorageImage } from "@/components/storage-image";
 import { getGuide } from "@/lib/queries";
 
 const BADGE: Record<string, string> = {
@@ -94,12 +95,12 @@ export default async function GuidePage(
                 </p>
               </div>
               {step.image_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={step.image_url}
-                  alt=""
-                  className="w-full border border-ink/10 object-cover"
-                />
+                <div className="relative h-[150px] w-full border border-ink/10">
+                  <StorageImage
+                    src={step.image_url}
+                    sizes="(min-width: 768px) 240px, 100vw"
+                  />
+                </div>
               ) : (
                 <Placeholder
                   label="wiring diagram"
@@ -156,7 +157,13 @@ export default async function GuidePage(
  */
 async function fetchCode(url: string) {
   try {
-    const response = await fetch(url, { cache: "no-store" });
+    // Without a deadline a hung storage request holds the whole page
+    // render open. The download button does not depend on this, so
+    // giving up quickly costs only the inline listing.
+    const response = await fetch(url, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    });
     if (!response.ok) throw new Error(String(response.status));
     const text = await response.text();
     return text.length > 40_000 ? `${text.slice(0, 40_000)}\n…` : text;

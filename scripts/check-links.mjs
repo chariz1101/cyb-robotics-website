@@ -46,6 +46,16 @@ while (queue.length) {
     continue;
   }
 
+  // The error boundary is a client component, so its marker only exists
+  // once hydration has run — checking at domcontentloaded would miss it.
+  await page.waitForTimeout(600);
+
+  if (await page.locator("[data-page-error]").count()) {
+    // The page failed; its links are the error page's, not its own.
+    skipped.push(`${path} (error boundary)`);
+    continue;
+  }
+
   const hrefs = await page.$$eval("a[href]", (as) =>
     as.map((a) => a.getAttribute("href") ?? ""),
   );
@@ -64,7 +74,7 @@ console.log(
   `\n${seen.size - skipped.length} page(s) reachable, ${broken.length} broken link(s).`,
 );
 if (skipped.length) {
-  console.log(`Skipped (server error, needs Supabase): ${skipped.join(", ")}`);
+  console.log(`NOT CRAWLED — these pages did not render: ${skipped.join(", ")}`);
 }
 
 await browser.close();

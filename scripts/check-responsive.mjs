@@ -35,6 +35,13 @@ for (const width of WIDTHS) {
     }
     await page.waitForTimeout(600);
 
+    // An error boundary lays out fine at every width; measuring it would
+    // report a pass for a page that never rendered.
+    if (await page.locator("[data-page-error]").count()) {
+      if (width === WIDTHS[0]) skipped.push(`${path} (error boundary)`);
+      continue;
+    }
+
     const { scrollWidth, culprits } = await page.evaluate((vw) => {
       const culprits = [];
       for (const el of document.querySelectorAll("body *")) {
@@ -87,6 +94,6 @@ for (const [name, pass] of checks) {
 await browser.close();
 
 if (skipped.length) {
-  console.log(`\nSkipped (needs Supabase credentials): ${skipped.join(", ")}`);
+  console.log(`\nNOT CHECKED — these pages did not render: ${skipped.join(", ")}`);
 }
 process.exit(failed ? 1 : 0);
